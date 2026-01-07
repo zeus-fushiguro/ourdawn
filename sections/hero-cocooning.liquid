@@ -1,0 +1,362 @@
+{{ 'warmlyst-design-system.css' | asset_url | stylesheet_tag }}
+{{ 'section-hero-cocooning.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'hero-cocooning.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #HeroCocooning-{{ section.id }} {
+    --hero-height-mobile: {{ section.settings.height_mobile }}px;
+    --hero-height-desktop: {{ section.settings.height_desktop }}vh;
+    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+
+  {%- if section.settings.image != blank -%}
+    #HeroCocooning-{{ section.id }} .hero-cocooning__media::after {
+      opacity: var(--overlay-opacity);
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section
+  id="HeroCocooning-{{ section.id }}"
+  class="hero-cocooning hero-cocooning--{{ section.settings.height_style }} hero-cocooning--{{ section.settings.content_position }} section-warmlyst{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  role="banner"
+  aria-label="{{ section.settings.title | escape }}"
+>
+  {%- liquid
+    assign fetch_priority = 'auto'
+    if section.index == 1
+      assign fetch_priority = 'high'
+    endif
+  -%}
+
+  <div class="hero-cocooning__media">
+    {%- if section.settings.image != blank -%}
+      {%- assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio -%}
+      {{
+        section.settings.image
+        | image_url: width: 3840
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: fetch_priority,
+          width: section.settings.image.width,
+          height: image_height,
+          class: 'hero-cocooning__image',
+          sizes: '100vw',
+          widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+          alt: section.settings.image.alt | escape
+      }}
+    {%- else -%}
+      {%- comment -%} Placeholder gradient si pas d'image {%- endcomment -%}
+      <div class="hero-cocooning__placeholder" style="background: linear-gradient(135deg, var(--color-warm-beige) 0%, var(--color-cocooning-orange-light) 100%);"></div>
+    {%- endif -%}
+
+    {%- comment -%} Overlay gradient chaud {%- endcomment -%}
+    <div class="hero-cocooning__overlay"></div>
+  </div>
+
+  <div class="hero-cocooning__content-wrapper">
+    <div class="hero-cocooning__content container-default">
+      {%- if section.settings.badge_text != blank -%}
+        <div class="hero-cocooning__badge" data-aos="fade-down">
+          {%- render 'badge-seasonal',
+            type: section.settings.badge_type,
+            text: section.settings.badge_text,
+            icon: true
+          -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.title != blank -%}
+        <h1 class="hero-cocooning__title text-heading" data-aos="fade-up" data-aos-delay="100">
+          {{ section.settings.title }}
+        </h1>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <div class="hero-cocooning__subtitle text-body" data-aos="fade-up" data-aos-delay="200">
+          {{ section.settings.subtitle }}
+        </div>
+      {%- endif -%}
+
+      <div class="hero-cocooning__buttons" data-aos="fade-up" data-aos-delay="300">
+        {%- if section.settings.button_primary_text != blank -%}
+          {%- render 'button-premium',
+            text: section.settings.button_primary_text,
+            url: section.settings.button_primary_url,
+            style: 'primary',
+            size: 'large',
+            icon: 'chevron-right'
+          -%}
+        {%- endif -%}
+
+        {%- if section.settings.button_secondary_text != blank -%}
+          {%- render 'button-premium',
+            text: section.settings.button_secondary_text,
+            url: section.settings.button_secondary_url,
+            style: 'secondary',
+            size: 'large',
+            icon: 'chevron-right'
+          -%}
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_trust_indicators -%}
+        <div class="hero-cocooning__trust-indicators" data-aos="fade-up" data-aos-delay="400">
+          <div class="trust-indicator">
+            {%- render 'icon-cocooning', name: 'delivery', size: 20 -%}
+            <span>Livraison gratuite dès 50€</span>
+          </div>
+          <div class="trust-indicator">
+            {%- render 'icon-cocooning', name: 'shield', size: 20 -%}
+            <span>Retours gratuits 30 jours</span>
+          </div>
+          <div class="trust-indicator">
+            {%- render 'icon-cocooning', name: 'eco-leaf', size: 20 -%}
+            <span>Matériaux durables</span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_scroll_indicator -%}
+    <div class="hero-cocooning__scroll-indicator" data-aos="fade-up" data-aos-delay="500">
+      {%- render 'icon-cocooning', name: 'chevron-down', size: 24 -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{%- comment -%} AOS (Animate On Scroll) initialization {%- endcomment -%}
+{%- if settings.animations_reveal_on_scroll -%}
+  <script>
+    if (typeof AOS !== 'undefined') {
+      document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+          duration: 800,
+          easing: 'ease-out-cubic',
+          once: true,
+          offset: 50
+        });
+      });
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hero Cocooning",
+  "tag": "section",
+  "class": "section-hero-cocooning",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Image & Apparence"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image de fond",
+      "info": "Recommandé: 1920x1080px minimum. Tons chauds, ambiance cocooning (hygge, hiver)."
+    },
+    {
+      "type": "select",
+      "id": "height_style",
+      "label": "Hauteur du hero",
+      "options": [
+        {
+          "value": "small",
+          "label": "Petit (400px)"
+        },
+        {
+          "value": "medium",
+          "label": "Moyen (500px)"
+        },
+        {
+          "value": "large",
+          "label": "Grand (650px)"
+        },
+        {
+          "value": "fullscreen",
+          "label": "Plein écran (100vh)"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Hauteur mobile",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Hauteur desktop",
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacité overlay",
+      "default": 30,
+      "info": "Assombrit l'image pour améliorer la lisibilité du texte"
+    },
+    {
+      "type": "header",
+      "content": "📝 Contenu"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge texte",
+      "default": "Collection Hiver 2026",
+      "info": "Petit badge au-dessus du titre"
+    },
+    {
+      "type": "select",
+      "id": "badge_type",
+      "label": "Type de badge",
+      "options": [
+        {
+          "value": "seasonal",
+          "label": "Saisonnier (orange)"
+        },
+        {
+          "value": "new",
+          "label": "Nouveau (gold)"
+        },
+        {
+          "value": "eco",
+          "label": "Éco (vert)"
+        }
+      ],
+      "default": "seasonal"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Titre principal",
+      "default": "Votre Cocon de Chaleur cet Hiver",
+      "info": "Grande typographie serif, max 60 caractères recommandé"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "<p>Découvrez notre collection d'accessoires douillets pour des moments de pur réconfort.</p>",
+      "info": "Description courte, 1-2 phrases"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Position du contenu",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Haut gauche"
+        },
+        {
+          "value": "top-center",
+          "label": "Haut centre"
+        },
+        {
+          "value": "top-right",
+          "label": "Haut droite"
+        },
+        {
+          "value": "center-left",
+          "label": "Centre gauche"
+        },
+        {
+          "value": "center",
+          "label": "Centré"
+        },
+        {
+          "value": "center-right",
+          "label": "Centre droite"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bas gauche"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bas centre"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bas droite"
+        }
+      ],
+      "default": "center-left"
+    },
+    {
+      "type": "header",
+      "content": "🔘 Boutons CTA"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_text",
+      "label": "Bouton principal - Texte",
+      "default": "Découvrir la collection",
+      "info": "CTA principal (orange)"
+    },
+    {
+      "type": "url",
+      "id": "button_primary_url",
+      "label": "Bouton principal - Lien"
+    },
+    {
+      "type": "text",
+      "id": "button_secondary_text",
+      "label": "Bouton secondaire - Texte",
+      "default": "En savoir plus",
+      "info": "CTA secondaire (outline)"
+    },
+    {
+      "type": "url",
+      "id": "button_secondary_url",
+      "label": "Bouton secondaire - Lien"
+    },
+    {
+      "type": "header",
+      "content": "✨ Options supplémentaires"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_indicators",
+      "label": "Afficher badges de réassurance",
+      "default": true,
+      "info": "Livraison gratuite, Retours, Éco-responsable"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_indicator",
+      "label": "Afficher indicateur de scroll",
+      "default": true,
+      "info": "Flèche animée vers le bas"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Cocooning",
+      "category": "WARMLYST"
+    }
+  ]
+}
+{% endschema %}

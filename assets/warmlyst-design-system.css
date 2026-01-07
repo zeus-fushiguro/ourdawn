@@ -1,0 +1,368 @@
+/*
+ * WARMLYST Design System
+ * Boutique Premium - Accessoires Hiver Cocooning
+ * Palette chaude, espacement généreux, micro-interactions subtiles
+ */
+
+/* ============================================
+   COLOR PALETTE - Tons Chauds Cocooning
+   ============================================ */
+:root {
+  /* Primary - Oranges chaleureux */
+  --color-cocooning-orange-light: #E88D5D;
+  --color-cocooning-orange: #D97542;
+  --color-cocooning-orange-dark: #C56637;
+
+  /* Secondary - Beiges doux */
+  --color-warm-beige-light: #F5E6D3;
+  --color-warm-beige: #E8D5C4;
+  --color-warm-beige-dark: #D4C0AD;
+
+  /* Accent - Browns naturels */
+  --color-brown-light: #8B5A3C;
+  --color-brown: #6B4423;
+  --color-brown-dark: #4A2F18;
+
+  /* Neutrals - Base claire et foncée */
+  --color-cream: #FAF8F5;
+  --color-off-white: #FFFCF7;
+  --color-charcoal: #2C2621;
+  --color-charcoal-light: #4A4540;
+
+  /* Semantic colors */
+  --color-success: #6B8E23; /* Olive doux pour badges eco */
+  --color-error: #C85A54; /* Terracotta pour erreurs */
+  --color-warning: #DAA520; /* Gold pour urgence subtile */
+
+  /* Overlays et ombres */
+  --overlay-warm: rgba(217, 117, 66, 0.15); /* Orange translucide */
+  --overlay-dark: rgba(44, 38, 33, 0.4); /* Charcoal translucide */
+  --shadow-soft: 0 4px 12px rgba(107, 68, 35, 0.08);
+  --shadow-medium: 0 8px 24px rgba(107, 68, 35, 0.12);
+  --shadow-strong: 0 16px 48px rgba(107, 68, 35, 0.16);
+}
+
+/* ============================================
+   TYPOGRAPHY - Elegance & Lisibilité
+   ============================================ */
+:root {
+  /* Font families */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Font sizes - Scale fluide responsive */
+  --font-size-display: clamp(3rem, 6vw, 5rem);      /* Hero titles */
+  --font-size-h1: clamp(2.25rem, 4vw, 3.5rem);      /* Page titles */
+  --font-size-h2: clamp(1.75rem, 3vw, 2.5rem);      /* Section titles */
+  --font-size-h3: clamp(1.5rem, 2.5vw, 2rem);       /* Subsections */
+  --font-size-h4: clamp(1.25rem, 2vw, 1.5rem);      /* Card titles */
+  --font-size-base: 1rem;                            /* Body text */
+  --font-size-small: 0.875rem;                       /* Metadata */
+  --font-size-tiny: 0.75rem;                         /* Labels */
+
+  /* Font weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* Letter spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+}
+
+/* ============================================
+   SPACING - Généreux et Aéré (Cozy)
+   ============================================ */
+:root {
+  /* Base spacing scale */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 1rem;      /* 16px */
+  --spacing-md: 1.5rem;    /* 24px */
+  --spacing-lg: 2rem;      /* 32px */
+  --spacing-xl: 3rem;      /* 48px */
+  --spacing-2xl: 4rem;     /* 64px */
+  --spacing-3xl: 6rem;     /* 96px */
+  --spacing-4xl: 8rem;     /* 128px */
+
+  /* Semantic spacing - Cozy philosophy */
+  --spacing-cozy-sm: 2rem;     /* Entre éléments proches */
+  --spacing-cozy-md: 3rem;     /* Entre cards/sections internes */
+  --spacing-cozy-lg: 4rem;     /* Entre sections */
+  --spacing-cozy-xl: 6rem;     /* Hero/Footer padding */
+
+  /* Container widths */
+  --container-narrow: 720px;   /* Forms, text content */
+  --container-default: 1200px; /* Standard sections */
+  --container-wide: 1440px;    /* Full-width sections */
+  --container-full: 100%;      /* Edge-to-edge */
+}
+
+/* ============================================
+   BORDERS & RADIUS - Douceur et Rondeur
+   ============================================ */
+:root {
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-2xl: 24px;
+  --border-radius-full: 9999px;
+
+  --border-width-thin: 1px;
+  --border-width-normal: 2px;
+  --border-width-thick: 3px;
+
+  --border-color-light: var(--color-warm-beige);
+  --border-color-default: var(--color-warm-beige-dark);
+  --border-color-dark: var(--color-brown-light);
+}
+
+/* ============================================
+   TRANSITIONS - Micro-interactions Subtiles
+   ============================================ */
+:root {
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Easing curves */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ============================================
+   Z-INDEX LAYERS - Hiérarchie claire
+   ============================================ */
+:root {
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-header: 300;
+  --z-drawer: 400;
+  --z-modal: 500;
+  --z-popup: 600;
+  --z-notification: 700;
+  --z-tooltip: 800;
+}
+
+/* ============================================
+   UTILITY CLASSES - Premium Components
+   ============================================ */
+
+/* Text utilities */
+.text-cocooning-orange { color: var(--color-cocooning-orange); }
+.text-warm-beige { color: var(--color-warm-beige-dark); }
+.text-brown { color: var(--color-brown); }
+.text-charcoal { color: var(--color-charcoal); }
+
+.text-heading {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+/* Background utilities */
+.bg-cream { background-color: var(--color-cream); }
+.bg-off-white { background-color: var(--color-off-white); }
+.bg-warm-beige { background-color: var(--color-warm-beige-light); }
+.bg-cocooning-orange { background-color: var(--color-cocooning-orange); }
+
+/* Gradient overlays premium */
+.overlay-warm-gradient {
+  background: linear-gradient(135deg,
+    rgba(217, 117, 66, 0.15) 0%,
+    rgba(232, 141, 93, 0.1) 100%
+  );
+}
+
+.overlay-cozy-gradient {
+  background: linear-gradient(180deg,
+    rgba(250, 248, 245, 0) 0%,
+    rgba(250, 248, 245, 0.8) 70%,
+    rgba(250, 248, 245, 1) 100%
+  );
+}
+
+/* Shadow utilities */
+.shadow-soft { box-shadow: var(--shadow-soft); }
+.shadow-medium { box-shadow: var(--shadow-medium); }
+.shadow-strong { box-shadow: var(--shadow-strong); }
+
+/* Hover effect - Subtle lift */
+.hover-lift {
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Button premium base */
+.btn-warmlyst {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--border-radius-lg);
+  border: var(--border-width-normal) solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.btn-warmlyst--primary {
+  background-color: var(--color-cocooning-orange);
+  color: var(--color-off-white);
+  border-color: var(--color-cocooning-orange);
+}
+
+.btn-warmlyst--primary:hover {
+  background-color: var(--color-cocooning-orange-dark);
+  border-color: var(--color-cocooning-orange-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn-warmlyst--secondary {
+  background-color: transparent;
+  color: var(--color-cocooning-orange);
+  border-color: var(--color-cocooning-orange);
+}
+
+.btn-warmlyst--secondary:hover {
+  background-color: var(--color-cocooning-orange);
+  color: var(--color-off-white);
+}
+
+/* Badge premium */
+.badge-warmlyst {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  border-radius: var(--border-radius-full);
+  white-space: nowrap;
+}
+
+.badge-warmlyst--seasonal {
+  background-color: var(--color-cocooning-orange-light);
+  color: var(--color-off-white);
+}
+
+.badge-warmlyst--new {
+  background-color: var(--color-warning);
+  color: var(--color-charcoal);
+}
+
+.badge-warmlyst--eco {
+  background-color: var(--color-success);
+  color: var(--color-off-white);
+}
+
+/* Card premium base */
+.card-warmlyst {
+  background-color: var(--color-off-white);
+  border-radius: var(--border-radius-xl);
+  border: var(--border-width-thin) solid var(--border-color-light);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.card-warmlyst:hover {
+  border-color: var(--border-color-default);
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-4px);
+}
+
+/* Container helpers */
+.container-narrow {
+  max-width: var(--container-narrow);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+.container-default {
+  max-width: var(--container-default);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+@media screen and (min-width: 750px) {
+  .container-narrow,
+  .container-default,
+  .container-wide {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+}
+
+/* Section spacing */
+.section-warmlyst {
+  padding-top: var(--spacing-cozy-lg);
+  padding-bottom: var(--spacing-cozy-lg);
+}
+
+@media screen and (min-width: 750px) {
+  .section-warmlyst {
+    padding-top: var(--spacing-cozy-xl);
+    padding-bottom: var(--spacing-cozy-xl);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles accessibles */
+*:focus-visible {
+  outline: 3px solid var(--color-cocooning-orange);
+  outline-offset: 2px;
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--color-cocooning-orange-light);
+  color: var(--color-off-white);
+}

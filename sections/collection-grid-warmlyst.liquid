@@ -1,0 +1,389 @@
+{{ 'warmlyst-design-system.css' | asset_url | stylesheet_tag }}
+{{ 'section-collection-grid-warmlyst.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'collection-grid-filters.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign products_to_show = section.settings.products_to_show | default: 12
+  assign columns_desktop = section.settings.columns_desktop | default: 4
+  assign columns_mobile = section.settings.columns_mobile | default: 2
+
+  # Get all product tags for filtering
+  assign all_tags = collection.all_tags
+-%}
+
+<section
+  id="CollectionGrid-{{ section.id }}"
+  class="collection-grid-warmlyst section-{{ section.id }}-padding section-warmlyst"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container-default">
+    {%- comment -%} HEADER {%- endcomment -%}
+    <div class="collection-grid__header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="collection-grid__title text-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="collection-grid__description text-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+      <div class="collection-grid__toolbar">
+        {%- comment -%} FILTERS {%- endcomment -%}
+        {%- if section.settings.enable_filtering and all_tags.size > 0 -%}
+          <div class="collection-grid__filters">
+            <button
+              type="button"
+              class="filter-toggle btn-warmlyst btn-warmlyst--outline btn-warmlyst--small"
+              aria-expanded="false"
+              aria-controls="FiltersDrawer-{{ section.id }}"
+            >
+              {%- render 'icon-cocooning', name: 'menu', size: 18 -%}
+              <span>Filtrer</span>
+              <span class="filter-count" data-count="0"></span>
+            </button>
+
+            <div class="filters-drawer" id="FiltersDrawer-{{ section.id }}" aria-hidden="true">
+              <div class="filters-drawer__overlay"></div>
+              <div class="filters-drawer__content">
+                <div class="filters-drawer__header">
+                  <h3>Filtrer par</h3>
+                  <button type="button" class="filters-drawer__close" aria-label="Fermer">
+                    {%- render 'icon-cocooning', name: 'close', size: 20 -%}
+                  </button>
+                </div>
+
+                <div class="filters-drawer__body">
+                  {%- comment -%} Categories filter {%- endcomment -%}
+                  <div class="filter-group">
+                    <h4 class="filter-group__title">Catégories</h4>
+                    <div class="filter-group__options">
+                      {%- for tag in all_tags -%}
+                        <label class="filter-option">
+                          <input
+                            type="checkbox"
+                            name="tag"
+                            value="{{ tag | handle }}"
+                            class="filter-option__input"
+                          >
+                          <span class="filter-option__label">{{ tag }}</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+
+                  {%- comment -%} Price range filter {%- endcomment -%}
+                  {%- if section.settings.enable_price_filter -%}
+                    <div class="filter-group">
+                      <h4 class="filter-group__title">Prix</h4>
+                      <div class="filter-group__options">
+                        <label class="filter-option">
+                          <input type="radio" name="price" value="" class="filter-option__input" checked>
+                          <span class="filter-option__label">Tous les prix</span>
+                        </label>
+                        <label class="filter-option">
+                          <input type="radio" name="price" value="0-25" class="filter-option__input">
+                          <span class="filter-option__label">Moins de 25€</span>
+                        </label>
+                        <label class="filter-option">
+                          <input type="radio" name="price" value="25-50" class="filter-option__input">
+                          <span class="filter-option__label">25€ - 50€</span>
+                        </label>
+                        <label class="filter-option">
+                          <input type="radio" name="price" value="50-100" class="filter-option__input">
+                          <span class="filter-option__label">50€ - 100€</span>
+                        </label>
+                        <label class="filter-option">
+                          <input type="radio" name="price" value="100" class="filter-option__input">
+                          <span class="filter-option__label">Plus de 100€</span>
+                        </label>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="filters-drawer__footer">
+                  <button type="button" class="btn-warmlyst btn-warmlyst--outline" id="clearFilters">
+                    Réinitialiser
+                  </button>
+                  <button type="button" class="btn-warmlyst btn-warmlyst--primary" id="applyFilters">
+                    Appliquer
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} SORTING {%- endcomment -%}
+        {%- if section.settings.enable_sorting -%}
+          <div class="collection-grid__sort">
+            <label for="SortBy-{{ section.id }}" class="sort-label">Trier par:</label>
+            <div class="sort-select-wrapper">
+              <select
+                id="SortBy-{{ section.id }}"
+                class="sort-select"
+                aria-label="Trier les produits"
+              >
+                <option value="manual">Sélection</option>
+                <option value="best-selling">Populaires</option>
+                <option value="title-ascending">A à Z</option>
+                <option value="title-descending">Z à A</option>
+                <option value="price-ascending">Prix croissant</option>
+                <option value="price-descending">Prix décroissant</option>
+                <option value="created-descending">Nouveautés</option>
+                <option value="created-ascending">Anciens</option>
+              </select>
+              {%- render 'icon-cocooning', name: 'chevron-down', size: 16 -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Active filters display {%- endcomment -%}
+    <div class="collection-grid__active-filters" id="activeFilters" hidden>
+      <div class="active-filters__list"></div>
+      <button type="button" class="active-filters__clear" id="clearAllFilters">
+        Tout effacer
+      </button>
+    </div>
+
+    {%- comment -%} PRODUCTS GRID {%- endcomment -%}
+    <div
+      class="collection-grid__products"
+      id="ProductGrid-{{ section.id }}"
+      data-collection-handle="{{ collection.handle }}"
+    >
+      <div class="product-grid product-grid--{{ columns_mobile }}-col-mobile product-grid--{{ columns_desktop }}-col-desktop">
+        {%- if collection != blank and collection.products.size > 0 -%}
+          {%- for product in collection.products limit: products_to_show -%}
+            <div
+              class="product-grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+              data-product-id="{{ product.id }}"
+              data-product-tags="{{ product.tags | join: ',' }}"
+              data-product-price="{{ product.price | money_without_currency | remove: ',' | times: 100 }}"
+              data-product-created="{{ product.created_at | date: '%s' }}"
+            >
+              {%- render 'card-product-warmlyst',
+                product: product,
+                show_badge: section.settings.show_seasonal_badges,
+                show_quick_view: section.settings.show_quick_view
+              -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} Empty state {%- endcomment -%}
+          <div class="collection-grid__empty">
+            <div class="empty-state">
+              {%- render 'icon-cocooning', name: 'snowflake', size: 48 -%}
+              <h3>Aucun produit trouvé</h3>
+              <p>Essayez de modifier vos filtres ou explorez d'autres collections.</p>
+              {%- render 'button-premium',
+                text: 'Voir toutes les collections',
+                url: routes.collections_url,
+                style: 'primary'
+              -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} No results message (hidden by default, shown by JS) {%- endcomment -%}
+      <div class="collection-grid__no-results" id="noResults" hidden>
+        <div class="empty-state">
+          {%- render 'icon-cocooning', name: 'search', size: 48 -%}
+          <h3>Aucun produit ne correspond à vos critères</h3>
+          <p>Essayez de modifier vos filtres.</p>
+          <button type="button" class="btn-warmlyst btn-warmlyst--secondary" id="resetFiltersFromEmpty">
+            Réinitialiser les filtres
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} View More Button {%- endcomment -%}
+    {%- if section.settings.show_view_all and collection.products.size > products_to_show -%}
+      <div class="collection-grid__footer">
+        {%- render 'button-premium',
+          text: 'Voir tous les produits',
+          url: collection.url,
+          style: 'outline',
+          size: 'large',
+          icon: 'chevron-right'
+        -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Grid Warmlyst",
+  "tag": "section",
+  "class": "section-collection-grid-warmlyst",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "📦 Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection à afficher"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "label": "Nombre de produits à afficher",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "📝 Contenu"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de la section",
+      "default": "Notre Collection Cocooning"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Découvrez nos accessoires d'hiver sélectionnés avec soin pour votre confort."
+    },
+    {
+      "type": "header",
+      "content": "🔍 Filtres & Tri"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Activer les filtres",
+      "default": true,
+      "info": "Filtrer par catégories (tags)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_price_filter",
+      "label": "Activer le filtre de prix",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Activer le tri",
+      "default": true,
+      "info": "Trier par prix, popularité, date..."
+    },
+    {
+      "type": "header",
+      "content": "🎨 Affichage"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Colonnes (desktop)",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Colonnes (mobile)",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 colonne"
+        },
+        {
+          "value": "2",
+          "label": "2 colonnes"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seasonal_badges",
+      "label": "Afficher badges saisonniers",
+      "default": true,
+      "info": "Collection Hiver 2026, Nouveau, etc."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view",
+      "label": "Afficher quick view au hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Afficher bouton 'Voir tous'",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "📐 Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding haut",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bas",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Grid Warmlyst",
+      "category": "WARMLYST"
+    }
+  ]
+}
+{% endschema %}

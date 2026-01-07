@@ -1,0 +1,401 @@
+{% comment %}
+  Renders a premium product card with hover effects and seasonal badge
+
+  Accepts:
+  - product: {Object} Product object
+  - show_badge: {Boolean} Show seasonal badge (default: true)
+  - show_quick_view: {Boolean} Show quick view button on hover (default: true)
+  - lazy_load: {Boolean} Image lazy loading (default: true)
+
+  Usage:
+  {% render 'card-product-warmlyst', product: product, show_badge: true %}
+{% endcomment %}
+
+{%- liquid
+  assign show_badge = show_badge | default: true
+  assign show_quick_view = show_quick_view | default: true
+  assign lazy_load = lazy_load | default: true
+
+  # Determine badge type based on product tags
+  assign badge_type = 'seasonal'
+  assign badge_text = 'Collection Hiver 2026'
+
+  if product.tags contains 'nouveau' or product.tags contains 'new'
+    assign badge_type = 'new'
+    assign badge_text = 'Nouveau'
+  elsif product.tags contains 'eco' or product.tags contains 'eco-responsable'
+    assign badge_type = 'eco'
+    assign badge_text = 'Éco-Responsable'
+  endif
+
+  # Check if product is low stock (you can customize this logic)
+  assign is_low_stock = false
+  if product.selected_or_first_available_variant.inventory_quantity < 5 and product.selected_or_first_available_variant.inventory_quantity > 0
+    assign is_low_stock = true
+  endif
+-%}
+
+<article class="card-product-warmlyst card-warmlyst" data-product-id="{{ product.id }}">
+  {%- comment -%} Image Container {%- endcomment -%}
+  <div class="card-product__media">
+    <a href="{{ product.url }}" class="card-product__link" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        {%- assign image_alt = product.featured_media.alt | default: product.title | escape -%}
+        {{
+          product.featured_media
+          | image_url: width: 800
+          | image_tag:
+            loading: lazy_load,
+            class: 'card-product__image card-product__image--primary',
+            sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+            widths: '165, 360, 535, 750, 1070, 1500',
+            alt: image_alt
+        }}
+
+        {%- comment -%} Secondary image on hover {%- endcomment -%}
+        {%- if product.media[1] != null -%}
+          {{
+            product.media[1]
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              class: 'card-product__image card-product__image--secondary',
+              sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+              widths: '165, 360, 535, 750, 1070, 1500',
+              alt: image_alt
+          }}
+        {%- endif -%}
+      {%- else -%}
+        <div class="card-product__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%} Badges {%- endcomment -%}
+    <div class="card-product__badges">
+      {%- if show_badge -%}
+        {%- render 'badge-seasonal', type: badge_type, text: badge_text -%}
+      {%- endif -%}
+
+      {%- if product.compare_at_price > product.price -%}
+        {%- assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+        <span class="badge-warmlyst badge-warmlyst--sale">-{{ savings }}%</span>
+      {%- endif -%}
+
+      {%- if is_low_stock -%}
+        <span class="badge-warmlyst badge-warmlyst--limited" style="background-color: var(--color-warning); color: var(--color-charcoal);">
+          Plus que {{ product.selected_or_first_available_variant.inventory_quantity }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Quick Actions (hover) {%- endcomment -%}
+    {%- if show_quick_view -%}
+      <div class="card-product__quick-actions">
+        <button
+          type="button"
+          class="quick-action quick-action--view"
+          aria-label="Vue rapide {{ product.title | escape }}"
+          data-product-id="{{ product.id }}"
+        >
+          {%- render 'icon-cocooning', name: 'search', size: 20 -%}
+          <span class="quick-action__label">Vue rapide</span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Product Info {%- endcomment -%}
+  <div class="card-product__info">
+    {%- comment -%} Vendor/Brand {%- endcomment -%}
+    {%- if product.vendor != blank -%}
+      <div class="card-product__vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+
+    {%- comment -%} Title {%- endcomment -%}
+    <h3 class="card-product__title">
+      <a href="{{ product.url }}" class="card-product__title-link">
+        {{ product.title | truncate: 60 }}
+      </a>
+    </h3>
+
+    {%- comment -%} Rating (if using reviews app) {%- endcomment -%}
+    {%- if product.metafields.reviews.rating.value != blank -%}
+      <div class="card-product__rating">
+        <div class="rating-stars" style="--rating: {{ product.metafields.reviews.rating.value | times: 20 }}%">
+          <span class="rating-stars__filled" aria-label="{{ product.metafields.reviews.rating.value }} sur 5 étoiles">
+            ★★★★★
+          </span>
+          <span class="rating-stars__empty" aria-hidden="true">★★★★★</span>
+        </div>
+        <span class="rating-count">({{ product.metafields.reviews.rating_count }})</span>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Price {%- endcomment -%}
+    <div class="card-product__price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="price price--on-sale">
+          {{ product.price | money }}
+        </span>
+        <span class="price price--compare">
+          <s>{{ product.compare_at_price | money }}</s>
+        </span>
+      {%- else -%}
+        <span class="price">
+          {{ product.price | money }}
+        </span>
+      {%- endif -%}
+
+      {%- if product.price_varies -%}
+        <span class="price-varies">+</span>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Variants preview (color swatches if applicable) {%- endcomment -%}
+    {%- if product.has_only_default_variant == false -%}
+      {%- assign color_option = product.options_by_name['Couleur'] | default: product.options_by_name['Color'] -%}
+      {%- if color_option and color_option.values.size > 1 and color_option.values.size <= 5 -%}
+        <div class="card-product__variants">
+          {%- for value in color_option.values limit: 5 -%}
+            <span
+              class="variant-swatch"
+              style="background-color: {{ value | handle }};"
+              title="{{ value }}"
+            ></span>
+          {%- endfor -%}
+          {%- if color_option.values.size > 5 -%}
+            <span class="variant-swatch variant-swatch--more">+{{ color_option.values.size | minus: 5 }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</article>
+
+<style>
+/* Card Product Warmlyst Styles */
+.card-product-warmlyst {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-product__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background-color: var(--color-warm-beige-light);
+  border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+}
+
+.card-product__link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.card-product__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-smooth), opacity var(--transition-normal);
+}
+
+.card-product__image--secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.card-product-warmlyst:hover .card-product__image--primary {
+  transform: scale(1.05);
+}
+
+.card-product-warmlyst:hover .card-product__image--secondary {
+  opacity: 1;
+}
+
+/* Badges */
+.card-product__badges {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: flex-start;
+}
+
+.badge-warmlyst--sale {
+  background-color: var(--color-error);
+  color: var(--color-off-white);
+}
+
+/* Quick Actions */
+.card-product__quick-actions {
+  position: absolute;
+  bottom: var(--spacing-sm);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  transition: all var(--transition-normal);
+  z-index: 3;
+}
+
+.card-product-warmlyst:hover .card-product__quick-actions {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.quick-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-off-white);
+  border: none;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-charcoal);
+  cursor: pointer;
+  box-shadow: var(--shadow-medium);
+  transition: all var(--transition-fast);
+}
+
+.quick-action:hover {
+  background-color: var(--color-cocooning-orange);
+  color: var(--color-off-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Product Info */
+.card-product__info {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex-grow: 1;
+}
+
+.card-product__vendor {
+  font-size: var(--font-size-small);
+  color: var(--color-warm-beige-dark);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.card-product__title {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.card-product__title-link {
+  color: var(--color-charcoal);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.card-product__title-link:hover {
+  color: var(--color-cocooning-orange);
+}
+
+/* Rating */
+.card-product__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-small);
+}
+
+.rating-stars {
+  position: relative;
+  display: inline-block;
+  color: var(--color-warning);
+}
+
+.rating-stars__filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--rating, 0%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rating-stars__empty {
+  color: var(--color-warm-beige-dark);
+}
+
+.rating-count {
+  color: var(--color-charcoal-light);
+}
+
+/* Price */
+.card-product__price {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+}
+
+.price {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-charcoal);
+}
+
+.price--on-sale {
+  color: var(--color-error);
+}
+
+.price--compare {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-charcoal-light);
+}
+
+.price-varies {
+  font-size: var(--font-size-small);
+  color: var(--color-charcoal-light);
+}
+
+/* Variant Swatches */
+.card-product__variants {
+  display: flex;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.variant-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-full);
+  border: 2px solid var(--color-warm-beige);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.variant-swatch:hover {
+  transform: scale(1.1);
+  border-color: var(--color-cocooning-orange);
+}
+
+.variant-swatch--more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-charcoal);
+  background-color: var(--color-warm-beige-light);
+}
+</style>

@@ -1,0 +1,8 @@
+# .claudeignore
+node_modules/
+.git/
+*.log
+.shopify/
+dist/
+.DS_Store
+*.md.backup

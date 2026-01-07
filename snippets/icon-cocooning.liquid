@@ -1,0 +1,94 @@
+{% comment %}
+  Renders cocooning-themed SVG icons
+
+  Accepts:
+  - name: string - Icon name (required)
+    Available: 'snowflake', 'fire', 'heart-warm', 'delivery', 'shield', 'eco-leaf',
+              'star', 'chevron-down', 'chevron-right', 'close', 'menu', 'cart', 'search'
+  - size: number - Icon size in pixels (default: 24)
+  - color: string - Icon color, uses currentColor by default
+  - class: string - Additional CSS classes
+
+  Usage:
+  {% render 'icon-cocooning', name: 'snowflake', size: 20 %}
+  {% render 'icon-cocooning', name: 'delivery', size: 32, color: 'var(--color-cocooning-orange)' %}
+{% endcomment %}
+
+{%- liquid
+  assign icon_name = name
+  assign icon_size = size | default: 24
+  assign icon_color = color | default: 'currentColor'
+  assign icon_class = class | default: ''
+-%}
+
+<svg
+  width="{{ icon_size }}"
+  height="{{ icon_size }}"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class="icon-cocooning icon-cocooning--{{ icon_name }} {{ icon_class }}"
+  aria-hidden="true"
+  focusable="false"
+>
+  {%- case icon_name -%}
+    {%- when 'snowflake' -%}
+      <path d="M12 2L12 22M5.636 5.636L18.364 18.364M2 12L22 12M5.636 18.364L18.364 5.636M7 7L12 12L17 7M7 17L12 12L17 17M17 12L12 12L17 7M7 12L12 12L7 7" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round"/>
+
+    {%- when 'fire' -%}
+      <path d="M12 2C8 6 6 9 6 12C6 16.418 8.686 20 12 20C15.314 20 18 16.418 18 12C18 9 16 6 12 2Z" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 14C11 15 10 15.5 10 16.5C10 17.328 10.672 18 11.5 18C12.328 18 13 17.328 13 16.5C13 15.5 12 15 12 14Z" fill="{{ icon_color }}"/>
+
+    {%- when 'heart-warm' -%}
+      <path d="M20.84 4.61C20.3292 4.09881 19.7228 3.69471 19.0554 3.4209C18.3879 3.14709 17.6725 3.00867 16.95 3.00867C16.2275 3.00867 15.5121 3.14709 14.8446 3.4209C14.1772 3.69471 13.5708 4.09881 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.57831 8.50903 3.00001 7.05 3.00001C5.59096 3.00001 4.19169 3.57831 3.16 4.61C2.1283 5.64169 1.55 7.04096 1.55 8.5C1.55 9.95903 2.1283 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.3512 11.8792 21.7553 11.2728 22.0291 10.6054C22.3029 9.93789 22.4413 9.22249 22.4413 8.5C22.4413 7.77751 22.3029 7.0621 22.0291 6.39464C21.7553 5.72718 21.3512 5.12075 20.84 4.61Z" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'delivery' -%}
+      <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="9" cy="20" r="2" stroke="{{ icon_color }}" stroke-width="2"/>
+      <circle cx="19" cy="20" r="2" stroke="{{ icon_color }}" stroke-width="2"/>
+
+    {%- when 'shield' -%}
+      <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9 12L11 14L15 10" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'eco-leaf' -%}
+      <path d="M7 20C7 20 3 16 3 11C3 6 7 2 12 2C17 2 21 6 21 11C21 16 17 20 17 20" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 2V12M12 12L17 7M12 12L7 7" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'star' -%}
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'chevron-down' -%}
+      <path d="M6 9L12 15L18 9" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'chevron-right' -%}
+      <path d="M9 18L15 12L9 6" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'close' -%}
+      <path d="M18 6L6 18M6 6L18 18" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'menu' -%}
+      <path d="M3 12H21M3 6H21M3 18H21" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'cart' -%}
+      <path d="M9 2L7.5 6M15 2L16.5 6M6 6H18L17 16H7L6 6Z" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="9" cy="20" r="1" fill="{{ icon_color }}"/>
+      <circle cx="15" cy="20" r="1" fill="{{ icon_color }}"/>
+
+    {%- when 'search' -%}
+      <circle cx="11" cy="11" r="8" stroke="{{ icon_color }}" stroke-width="2"/>
+      <path d="M21 21L16.65 16.65" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round"/>
+
+    {%- else -%}
+      <!-- Default icon if name not found -->
+      <circle cx="12" cy="12" r="10" stroke="{{ icon_color }}" stroke-width="2"/>
+  {%- endcase -%}
+</svg>
+
+<style>
+.icon-cocooning {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+</style>

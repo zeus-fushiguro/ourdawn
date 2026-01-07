@@ -1,0 +1,76 @@
+{% comment %}
+  Renders a seasonal/status badge for products
+
+  Accepts:
+  - type: string - Badge type: 'seasonal', 'new', 'eco', 'limited' (default: 'seasonal')
+  - text: string - Custom badge text (optional, will use default per type)
+  - icon: boolean - Show icon (default: false)
+
+  Usage:
+  {% render 'badge-seasonal', type: 'seasonal', text: 'Collection Hiver 2026' %}
+  {% render 'badge-seasonal', type: 'new' %}
+  {% render 'badge-seasonal', type: 'limited', text: 'Plus que 3', icon: true %}
+{% endcomment %}
+
+{%- liquid
+  assign badge_type = type | default: 'seasonal'
+  assign show_icon = icon | default: false
+
+  # Default texts per type
+  assign default_texts = ''
+  case badge_type
+    when 'seasonal'
+      assign default_text = 'Collection Hiver 2026'
+    when 'new'
+      assign default_text = 'Nouveau'
+    when 'eco'
+      assign default_text = 'Éco-Responsable'
+    when 'limited'
+      assign default_text = 'Stock Limité'
+    else
+      assign default_text = 'Collection Hiver 2026'
+  endcase
+
+  assign badge_text = text | default: default_text
+-%}
+
+<span class="badge-warmlyst badge-warmlyst--{{ badge_type }}" role="status" aria-label="{{ badge_text }}">
+  {%- if show_icon -%}
+    <span class="badge-warmlyst__icon" aria-hidden="true">
+      {%- case badge_type -%}
+        {%- when 'seasonal' -%}
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1L7.545 4.635L11.472 5.236L8.736 7.865L9.414 11.764L6 9.635L2.586 11.764L3.264 7.865L0.528 5.236L4.455 4.635L6 1Z" fill="currentColor"/>
+          </svg>
+        {%- when 'new' -%}
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1L6.7 5.3L11 6L6.7 6.7L6 11L5.3 6.7L1 6L5.3 5.3L6 1Z" fill="currentColor"/>
+          </svg>
+        {%- when 'eco' -%}
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1C3.5 1 1 2.5 1 5.5C1 7 2 8.5 3.5 9.5L6 11L8.5 9.5C10 8.5 11 7 11 5.5C11 2.5 8.5 1 6 1Z" fill="currentColor"/>
+          </svg>
+        {%- when 'limited' -%}
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M6 3V6L8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+      {%- endcase -%}
+    </span>
+  {%- endif -%}
+  <span class="badge-warmlyst__text">{{ badge_text }}</span>
+</span>
+
+<style>
+.badge-warmlyst__icon {
+  display: inline-flex;
+  align-items: center;
+  width: 12px;
+  height: 12px;
+}
+
+.badge-warmlyst__icon svg {
+  width: 100%;
+  height: 100%;
+}
+</style>

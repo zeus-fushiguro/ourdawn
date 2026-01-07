@@ -1,0 +1,166 @@
+{% comment %}
+  Renders a premium Warmlyst button
+
+  Accepts:
+  - text: string - Button text (required)
+  - url: string - Button URL (optional, if empty renders as <button>)
+  - style: string - Button style: 'primary', 'secondary', 'outline' (default: 'primary')
+  - size: string - Button size: 'small', 'medium', 'large' (default: 'medium')
+  - icon: string - Icon name from icon-cocooning (optional)
+  - icon_position: string - 'left' or 'right' (default: 'right')
+  - class: string - Additional CSS classes
+  - attributes: string - Additional HTML attributes (e.g., 'data-modal-trigger="true"')
+
+  Usage:
+  {% render 'button-premium',
+    text: 'Découvrir la collection',
+    url: collection.url,
+    style: 'primary',
+    icon: 'chevron-right'
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign button_text = text | default: 'En savoir plus'
+  assign button_url = url
+  assign button_style = style | default: 'primary'
+  assign button_size = size | default: 'medium'
+  assign button_icon = icon
+  assign button_icon_position = icon_position | default: 'right'
+  assign button_class = class | default: ''
+  assign button_attributes = attributes | default: ''
+
+  assign btn_classes = 'btn-warmlyst'
+  assign btn_classes = btn_classes | append: ' btn-warmlyst--' | append: button_style
+  assign btn_classes = btn_classes | append: ' btn-warmlyst--' | append: button_size
+  if button_class != blank
+    assign btn_classes = btn_classes | append: ' ' | append: button_class
+  endif
+-%}
+
+{%- if button_url != blank -%}
+  <a href="{{ button_url }}" class="{{ btn_classes }}" {{ button_attributes }}>
+{%- else -%}
+  <button type="button" class="{{ btn_classes }}" {{ button_attributes }}>
+{%- endif -%}
+
+  {%- if button_icon and button_icon_position == 'left' -%}
+    <span class="btn-warmlyst__icon btn-warmlyst__icon--left">
+      {%- render 'icon-cocooning', name: button_icon, size: 20 -%}
+    </span>
+  {%- endif -%}
+
+  <span class="btn-warmlyst__text">{{ button_text }}</span>
+
+  {%- if button_icon and button_icon_position == 'right' -%}
+    <span class="btn-warmlyst__icon btn-warmlyst__icon--right">
+      {%- render 'icon-cocooning', name: button_icon, size: 20 -%}
+    </span>
+  {%- endif -%}
+
+{%- if button_url != blank -%}
+  </a>
+{%- else -%}
+  </button>
+{%- endif -%}
+
+<style>
+/* Button size variations */
+.btn-warmlyst--small {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-small);
+}
+
+.btn-warmlyst--medium {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+}
+
+.btn-warmlyst--large {
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  font-size: var(--font-size-h4);
+}
+
+/* Outline variant */
+.btn-warmlyst--outline {
+  background-color: transparent;
+  color: var(--color-charcoal);
+  border-color: var(--color-warm-beige-dark);
+}
+
+.btn-warmlyst--outline:hover {
+  background-color: var(--color-warm-beige-light);
+  border-color: var(--color-cocooning-orange);
+  color: var(--color-cocooning-orange);
+  transform: translateY(-2px);
+}
+
+/* Icon spacing */
+.btn-warmlyst__icon {
+  display: inline-flex;
+  align-items: center;
+  transition: transform var(--transition-normal);
+}
+
+.btn-warmlyst:hover .btn-warmlyst__icon--right {
+  transform: translateX(4px);
+}
+
+.btn-warmlyst:hover .btn-warmlyst__icon--left {
+  transform: translateX(-4px);
+}
+
+/* Disabled state */
+.btn-warmlyst:disabled,
+.btn-warmlyst[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Loading state */
+.btn-warmlyst--loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn-warmlyst--loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btn-spinner 0.6s linear infinite;
+}
+
+@keyframes btn-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Focus state for accessibility */
+.btn-warmlyst:focus-visible {
+  outline: 3px solid var(--color-cocooning-orange);
+  outline-offset: 2px;
+}
+
+/* Mobile optimization */
+@media screen and (max-width: 749px) {
+  .btn-warmlyst {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-warmlyst--large {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-base);
+  }
+}
+</style>
