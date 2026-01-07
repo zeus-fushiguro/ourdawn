@@ -1,0 +1,113 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Écrivez-nous",
+        "heading_size": "h1",
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text": {
+      "type": "image-with-text-warmlyst",
+      "blocks": {
+        "item_1": {
+          "type": "list_item",
+          "settings": {
+            "icon": "delivery",
+            "text": "Réponse sous 24h en semaine"
+          }
+        },
+        "item_2": {
+          "type": "list_item",
+          "settings": {
+            "icon": "heart-warm",
+            "text": "Équipe dédiée et à l'écoute"
+          }
+        },
+        "item_3": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shield",
+            "text": "Support avant et après-vente"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ],
+      "settings": {
+        "badge_text": "Service Client",
+        "badge_type": "seasonal",
+        "title": "Nous Sommes Là Pour Vous",
+        "text": "<p>Notre équipe est disponible pour répondre à toutes vos questions sur nos produits, les livraisons, ou simplement pour échanger sur votre prochaine commande cocooning.</p>",
+        "button_text": "",
+        "button_url": "",
+        "button_style": "primary",
+        "layout": "image-right",
+        "background_color": "cream",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "faq": {
+      "type": "faq-accordion-warmlyst",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "Quels sont vos horaires?",
+            "answer": "<p>Notre service client est disponible du lundi au vendredi, de 9h à 18h. Nous répondons aux emails sous 24h.</p>",
+            "open_by_default": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Comment suivre ma commande?",
+            "answer": "<p>Vous recevrez un email avec un numéro de suivi dès l'expédition de votre commande. Vous pouvez également consulter l'état de votre commande dans votre compte client.</p>",
+            "open_by_default": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je modifier ma commande?",
+            "answer": "<p>Contactez-nous immédiatement si vous souhaitez modifier votre commande. Si elle n'a pas encore été expédiée, nous ferons notre possible pour l'ajuster.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3"
+      ],
+      "settings": {
+        "title": "Questions Fréquentes",
+        "description": "Trouvez rapidement les réponses à vos questions",
+        "show_contact_cta": false,
+        "background_color": "off-white",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "form",
+    "image_with_text",
+    "faq"
+  ]
+}

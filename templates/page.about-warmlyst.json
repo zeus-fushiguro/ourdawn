@@ -1,0 +1,143 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-cocooning",
+      "settings": {
+        "height_style": "medium",
+        "height_mobile": 400,
+        "height_desktop": 60,
+        "overlay_opacity": 40,
+        "badge_text": "Notre Histoire",
+        "badge_type": "seasonal",
+        "title": "Warmlyst, Votre Refuge de Chaleur",
+        "subtitle": "<p>Depuis 2026, nous créons des accessoires d'hiver qui transforment chaque instant en moment de pure sérénité.</p>",
+        "content_position": "center",
+        "button_primary_text": "Découvrir nos produits",
+        "button_primary_url": "/collections/all",
+        "button_secondary_text": "",
+        "button_secondary_url": "",
+        "show_trust_indicators": false,
+        "show_scroll_indicator": true
+      }
+    },
+    "image_with_text_1": {
+      "type": "image-with-text-warmlyst",
+      "blocks": {
+        "item_1": {
+          "type": "list_item",
+          "settings": {
+            "icon": "heart-warm",
+            "text": "Passion pour le confort authentique"
+          }
+        },
+        "item_2": {
+          "type": "list_item",
+          "settings": {
+            "icon": "eco-leaf",
+            "text": "Engagement envers la durabilité"
+          }
+        },
+        "item_3": {
+          "type": "list_item",
+          "settings": {
+            "icon": "star",
+            "text": "Excellence dans chaque détail"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ],
+      "settings": {
+        "badge_text": "Notre Mission",
+        "badge_type": "eco",
+        "title": "Créer le Confort que Vous Méritez",
+        "text": "<p>Chez Warmlyst, nous croyons que chaque hiver devrait être synonyme de chaleur, de douceur et de moments précieux. C'est pourquoi nous sélectionnons avec soin chaque matériau, chaque fibre, pour vous offrir des accessoires qui vous accompagnent dans vos instants cocooning.</p>",
+        "button_text": "",
+        "button_url": "",
+        "button_style": "primary",
+        "layout": "image-left",
+        "background_color": "off-white",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "image_with_text_2": {
+      "type": "image-with-text-warmlyst",
+      "settings": {
+        "badge_text": "Nos Valeurs",
+        "badge_type": "new",
+        "title": "Durable, Responsable, Authentique",
+        "text": "<p>Nous travaillons uniquement avec des fournisseurs certifiés qui partagent notre vision d'un avenir plus durable. Chaque produit est conçu pour durer, pour que vous puissiez profiter de moments chaleureux année après année.</p>",
+        "button_text": "Voir nos engagements",
+        "button_url": "/pages/sustainability",
+        "button_style": "secondary",
+        "layout": "image-right",
+        "background_color": "cream",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "featured_products": {
+      "type": "featured-products-slider-warmlyst",
+      "settings": {
+        "title": "Nos Best-Sellers",
+        "description": "Les accessoires préférés de notre communauté",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "show_navigation": true,
+        "show_dots": true,
+        "autoplay": false,
+        "show_badges": true,
+        "background_color": "off-white",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "faq": {
+      "type": "faq-accordion-warmlyst",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "D'où viennent vos produits?",
+            "answer": "<p>Nous travaillons avec des artisans et fournisseurs européens certifiés, garantissant la qualité et la traçabilité de chaque produit.</p>",
+            "open_by_default": false
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Pourquoi choisir Warmlyst?",
+            "answer": "<p>Notre engagement envers la qualité, la durabilité et votre confort fait toute la différence. Chaque accessoire est pensé pour améliorer vos moments d'hiver.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2"
+      ],
+      "settings": {
+        "title": "En Savoir Plus",
+        "description": "",
+        "show_contact_cta": true,
+        "contact_cta_text": "Une question?",
+        "contact_button_text": "Contactez-nous",
+        "contact_button_url": "/pages/contact",
+        "background_color": "warm-beige",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "image_with_text_1",
+    "image_with_text_2",
+    "featured_products",
+    "faq"
+  ]
+}

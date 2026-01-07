@@ -1,0 +1,150 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "badge_seasonal": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% if product.tags contains 'hiver' or product.tags contains 'winter' %}\n  {% render 'badge-seasonal', type: 'seasonal', text: 'Collection Hiver 2026' %}\n{% elsif product.tags contains 'nouveau' or product.tags contains 'new' %}\n  {% render 'badge-seasonal', type: 'new' %}\n{% elsif product.tags contains 'eco' %}\n  {% render 'badge-seasonal', type: 'eco' %}\n{% endif %}"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "trust_badges": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem;\">\n  <div style=\"display: flex; align-items: center; gap: 0.5rem;\">\n    {% render 'icon-cocooning', name: 'delivery', size: 20 %}\n    <span style=\"font-size: 0.875rem;\">Livraison gratuite dès 50€</span>\n  </div>\n  <div style=\"display: flex; align-items: center; gap: 0.5rem;\">\n    {% render 'icon-cocooning', name: 'shield', size: 20 %}\n    <span style=\"font-size: 0.875rem;\">Retours gratuits 30 jours</span>\n  </div>\n  <div style=\"display: flex; align-items: center; gap: 0.5rem;\">\n    {% render 'icon-cocooning', name: 'eco-leaf', size: 20 %}\n    <span style=\"font-size: 0.875rem;\">Matériaux durables</span>\n  </div>\n</div>"
+          }
+        },
+        "collapsible_tab_materials": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Matériaux",
+            "icon": "heart",
+            "content": "<p>{{ product.metafields.custom.materials | default: 'Matériaux de qualité premium, sélectionnés pour leur douceur et leur durabilité.' }}</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_care": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Entretien",
+            "icon": "washing",
+            "content": "<p>{{ product.metafields.custom.care_instructions | default: 'Lavage à la main à leau froide recommandé. Séchage à plat.' }}</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Livraison",
+            "icon": "truck",
+            "content": "<p>Livraison sous 3-5 jours ouvrés en France métropolitaine. Gratuite dès 50€ d'achat.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "badge_seasonal",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "trust_badges",
+        "description",
+        "collapsible_tab_materials",
+        "collapsible_tab_care",
+        "collapsible_tab_shipping"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "related_products": {
+      "type": "featured-products-slider-warmlyst",
+      "settings": {
+        "title": "Vous aimerez aussi",
+        "description": "Découvrez notre sélection d'accessoires assortis",
+        "products_to_show": 8,
+        "show_view_all": false,
+        "show_navigation": true,
+        "show_dots": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "show_badges": true,
+        "background_color": "cream",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "image_with_text": {
+      "type": "image-with-text-warmlyst",
+      "settings": {
+        "badge_text": "Qualité Premium",
+        "badge_type": "eco",
+        "title": "Des Matériaux Sélectionnés avec Soin",
+        "text": "<p>Chaque accessoire WARMLYST est fabriqué à partir de matériaux durables et responsables, pour votre confort et celui de la planète.</p>",
+        "button_text": "Notre Engagement",
+        "button_url": "/pages/about",
+        "button_style": "secondary",
+        "layout": "image-right",
+        "background_color": "off-white",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related_products",
+    "image_with_text"
+  ]
+}

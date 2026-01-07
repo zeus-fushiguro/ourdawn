@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "color_scheme": "background-1"
+      }
+    },
+    "product_grid": {
+      "type": "collection-grid-warmlyst",
+      "settings": {
+        "products_to_show": 24,
+        "title": "",
+        "description": "",
+        "enable_filtering": true,
+        "enable_price_filter": true,
+        "enable_sorting": true,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "show_seasonal_badges": true,
+        "show_quick_view": true,
+        "show_view_all": false,
+        "padding_top": 36,
+        "padding_bottom": 64
+      }
+    },
+    "image_with_text": {
+      "type": "image-with-text-warmlyst",
+      "settings": {
+        "badge_text": "Cocooning",
+        "badge_type": "seasonal",
+        "title": "L'Esprit Warmlyst",
+        "text": "<p>Nos accessoires d'hiver sont conçus pour vous envelopper de chaleur et de confort, où que vous soyez.</p>",
+        "button_text": "Notre Histoire",
+        "button_url": "/pages/about",
+        "button_style": "outline",
+        "layout": "image-left",
+        "background_color": "cream",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product_grid",
+    "image_with_text"
+  ]
+}
