@@ -56,7 +56,7 @@
           "settings": {
             "heading": "Matériaux",
             "icon": "heart",
-            "content": "<p>{{ product.metafields.custom.materials | default: \"Matériaux de qualité premium, sélectionnés pour leur douceur et leur durabilité.\" }}</p>",
+            "content": "<p>Matériaux de qualité premium, sélectionnés pour leur douceur et leur durabilité.</p>",
             "page": ""
           }
         },
@@ -65,7 +65,7 @@
           "settings": {
             "heading": "Entretien",
             "icon": "washing",
-            "content": "<p>{{ product.metafields.custom.care_instructions | default: \"Lavage à la main à l'eau froide recommandé. Séchage à plat.\" }}</p>",
+            "content": "<p>Lavage à la main à l'eau froide recommandé. Séchage à plat.</p>",
             "page": ""
           }
         },
