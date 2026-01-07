@@ -1,0 +1,274 @@
+{{ 'warmlyst-design-system.css' | asset_url | stylesheet_tag }}
+{{ 'section-featured-products-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'featured-products-slider.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign products_to_show = section.settings.products_to_show | default: 8
+-%}
+
+<section
+  id="FeaturedSlider-{{ section.id }}"
+  class="featured-products-slider section-{{ section.id }}-padding section-warmlyst bg-{{ section.settings.background_color }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container-default">
+    {%- comment -%} HEADER {%- endcomment -%}
+    <div class="slider-header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="slider-header__title text-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="slider-header__description text-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_view_all and collection != blank -%}
+        <div class="slider-header__cta">
+          {%- render 'button-premium',
+            text: 'Voir tout',
+            url: collection.url,
+            style: 'outline',
+            icon: 'chevron-right'
+          -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} SLIDER {%- endcomment -%}
+    <div class="products-slider-wrapper">
+      {%- if section.settings.show_navigation -%}
+        <button
+          type="button"
+          class="slider-nav slider-nav--prev"
+          aria-label="Produit précédent"
+          disabled
+        >
+          {%- render 'icon-cocooning', name: 'chevron-right', size: 24 -%}
+        </button>
+      {%- endif -%}
+
+      <div
+        class="products-slider"
+        data-slider
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+      >
+        <div class="products-slider__track" data-slider-track>
+          {%- if collection != blank and collection.products.size > 0 -%}
+            {%- for product in collection.products limit: products_to_show -%}
+              <div class="products-slider__slide" data-slider-slide>
+                {%- render 'card-product-warmlyst',
+                  product: product,
+                  show_badge: section.settings.show_badges,
+                  show_quick_view: false
+                -%}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- comment -%} Placeholder products {%- endcomment -%}
+            {%- for i in (1..products_to_show) -%}
+              <div class="products-slider__slide" data-slider-slide>
+                <div class="card-product-warmlyst card-warmlyst">
+                  <div class="card-product__media">
+                    <div class="card-product__placeholder">
+                      {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  </div>
+                  <div class="card-product__info">
+                    <h3 class="card-product__title">Produit {{ forloop.index }}</h3>
+                    <div class="card-product__price">
+                      <span class="price">€XX.XX</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if section.settings.show_navigation -%}
+        <button
+          type="button"
+          class="slider-nav slider-nav--next"
+          aria-label="Produit suivant"
+        >
+          {%- render 'icon-cocooning', name: 'chevron-right', size: 24 -%}
+        </button>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} DOTS NAVIGATION {%- endcomment -%}
+    {%- if section.settings.show_dots -%}
+      <div class="slider-dots" data-slider-dots></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products Slider",
+  "tag": "section",
+  "class": "section-featured-products-slider",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection à afficher"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "label": "Nombre de produits",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre de la section",
+      "default": "Nos Coups de Coeur"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Découvrez notre sélection d'accessoires d'hiver pour un confort optimal."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Afficher bouton 'Voir tout'",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slider Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Afficher flèches navigation",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Afficher dots navigation",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-play",
+      "default": false,
+      "info": "Le slider défile automatiquement"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Vitesse auto-play",
+      "default": 5,
+      "info": "Seulement si auto-play est activé"
+    },
+    {
+      "type": "header",
+      "content": "Affichage"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Afficher badges saisonniers",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "background_color",
+      "label": "Couleur de fond",
+      "options": [
+        {
+          "value": "cream",
+          "label": "Crème"
+        },
+        {
+          "value": "off-white",
+          "label": "Blanc cassé"
+        },
+        {
+          "value": "warm-beige",
+          "label": "Beige chaud"
+        }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding haut",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bas",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products Slider",
+      "category": "WARMLYST"
+    }
+  ]
+}
+{% endschema %}

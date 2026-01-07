@@ -1,0 +1,307 @@
+{{ 'warmlyst-design-system.css' | asset_url | stylesheet_tag }}
+{{ 'section-image-with-text-warmlyst.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section
+  id="ImageWithText-{{ section.id }}"
+  class="image-with-text-warmlyst section-{{ section.id }}-padding section-warmlyst bg-{{ section.settings.background_color }} layout-{{ section.settings.layout }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+>
+  <div class="container-default">
+    <div class="image-with-text__grid">
+      {%- comment -%} IMAGE SIDE {%- endcomment -%}
+      <div class="image-with-text__media-wrapper">
+        <div class="image-with-text__media">
+          {%- if section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1500
+              | image_tag:
+                loading: 'lazy',
+                class: 'image-with-text__image',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                widths: '375, 550, 750, 1100, 1500',
+                alt: section.settings.image.alt | escape
+            }}
+          {%- else -%}
+            <div class="image-with-text__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} TEXT SIDE {%- endcomment -%}
+      <div class="image-with-text__content-wrapper">
+        <div class="image-with-text__content">
+          {%- if section.settings.badge_text != blank -%}
+            <div class="image-with-text__badge">
+              {%- render 'badge-seasonal',
+                type: section.settings.badge_type,
+                text: section.settings.badge_text
+              -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            <h2 class="image-with-text__title text-heading">
+              {{ section.settings.title }}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.text != blank -%}
+            <div class="image-with-text__text text-body rte">
+              {{ section.settings.text }}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.button_text != blank -%}
+            <div class="image-with-text__button">
+              {%- render 'button-premium',
+                text: section.settings.button_text,
+                url: section.settings.button_url,
+                style: section.settings.button_style,
+                size: 'medium',
+                icon: 'chevron-right'
+              -%}
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Optional list items {%- endcomment -%}
+          {%- if section.blocks.size > 0 -%}
+            <ul class="image-with-text__list">
+              {%- for block in section.blocks -%}
+                <li class="list-item" {{ block.shopify_attributes }}>
+                  <div class="list-item__icon">
+                    {%- render 'icon-cocooning', name: block.settings.icon, size: 24 -%}
+                  </div>
+                  <div class="list-item__text">{{ block.settings.text }}</div>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with Text",
+  "tag": "section",
+  "class": "section-image-with-text-warmlyst",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommandé: 1500x1000px minimum"
+    },
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge texte",
+      "default": "Notre Histoire"
+    },
+    {
+      "type": "select",
+      "id": "badge_type",
+      "label": "Type de badge",
+      "options": [
+        {
+          "value": "seasonal",
+          "label": "Saisonnier"
+        },
+        {
+          "value": "new",
+          "label": "Nouveau"
+        },
+        {
+          "value": "eco",
+          "label": "Éco"
+        }
+      ],
+      "default": "seasonal"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Votre Confort, Notre Passion"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texte",
+      "default": "<p>Depuis 2026, nous créons des accessoires d'hiver qui allient style, confort et durabilité. Chaque produit est sélectionné avec soin pour vous offrir une expérience cocooning unique.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texte du bouton",
+      "default": "En savoir plus"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Lien du bouton"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Style du bouton",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Position de l'image",
+      "options": [
+        {
+          "value": "image-left",
+          "label": "Image à gauche"
+        },
+        {
+          "value": "image-right",
+          "label": "Image à droite"
+        }
+      ],
+      "default": "image-left"
+    },
+    {
+      "type": "select",
+      "id": "background_color",
+      "label": "Couleur de fond",
+      "options": [
+        {
+          "value": "cream",
+          "label": "Crème"
+        },
+        {
+          "value": "off-white",
+          "label": "Blanc cassé"
+        },
+        {
+          "value": "warm-beige",
+          "label": "Beige chaud"
+        }
+      ],
+      "default": "off-white"
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding haut",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bas",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "Point clé",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icône",
+          "options": [
+            {
+              "value": "delivery",
+              "label": "Livraison"
+            },
+            {
+              "value": "shield",
+              "label": "Protection"
+            },
+            {
+              "value": "eco-leaf",
+              "label": "Éco"
+            },
+            {
+              "value": "heart-warm",
+              "label": "Coeur"
+            },
+            {
+              "value": "star",
+              "label": "Étoile"
+            }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "Matériaux durables et responsables"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Text",
+      "category": "WARMLYST"
+    }
+  ]
+}
+{% endschema %}

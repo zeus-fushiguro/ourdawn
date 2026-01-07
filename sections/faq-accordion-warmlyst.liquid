@@ -1,0 +1,263 @@
+{{ 'warmlyst-design-system.css' | asset_url | stylesheet_tag }}
+{{ 'section-faq-accordion-warmlyst.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'faq-accordion.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section
+  id="FAQ-{{ section.id }}"
+  class="faq-accordion-warmlyst section-{{ section.id }}-padding section-warmlyst bg-{{ section.settings.background_color }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+>
+  <div class="container-narrow">
+    {%- comment -%} HEADER {%- endcomment -%}
+    <div class="faq-header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="faq-header__title text-heading">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="faq-header__description text-body">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ACCORDION ITEMS {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq-accordion" data-faq-accordion>
+        {%- for block in section.blocks -%}
+          <div
+            class="faq-item{% if block.settings.open_by_default %} is-open{% endif %}"
+            data-faq-item
+            {{ block.shopify_attributes }}
+          >
+            <button
+              type="button"
+              class="faq-item__question"
+              aria-expanded="{% if block.settings.open_by_default %}true{% else %}false{% endif %}"
+              data-faq-trigger
+            >
+              <span class="faq-item__question-text">{{ block.settings.question }}</span>
+              <span class="faq-item__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path class="icon-minus" d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path class="icon-plus" d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </button>
+
+            <div
+              class="faq-item__answer-wrapper"
+              data-faq-content
+              {% unless block.settings.open_by_default %}hidden{% endunless %}
+            >
+              <div class="faq-item__answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- comment -%} Empty state {%- endcomment -%}
+      <div class="faq-empty">
+        <p>Ajoutez des questions/réponses dans les blocs de cette section.</p>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} CTA {%- endcomment -%}
+    {%- if section.settings.show_contact_cta and section.settings.contact_button_text != blank -%}
+      <div class="faq-cta">
+        <p class="faq-cta__text">{{ section.settings.contact_cta_text }}</p>
+        {%- render 'button-premium',
+          text: section.settings.contact_button_text,
+          url: section.settings.contact_button_url,
+          style: 'secondary',
+          size: 'medium',
+          icon: 'chevron-right'
+        -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "tag": "section",
+  "class": "section-faq-accordion-warmlyst",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Questions Fréquentes"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Retrouvez toutes les réponses à vos questions sur nos produits, livraisons et retours."
+    },
+    {
+      "type": "header",
+      "content": "CTA Contact"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_cta",
+      "label": "Afficher CTA contact",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_cta_text",
+      "label": "Texte CTA",
+      "default": "Vous ne trouvez pas votre réponse?"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_text",
+      "label": "Texte du bouton",
+      "default": "Contactez-nous"
+    },
+    {
+      "type": "url",
+      "id": "contact_button_url",
+      "label": "Lien du bouton"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "select",
+      "id": "background_color",
+      "label": "Couleur de fond",
+      "options": [
+        {
+          "value": "cream",
+          "label": "Crème"
+        },
+        {
+          "value": "off-white",
+          "label": "Blanc cassé"
+        },
+        {
+          "value": "warm-beige",
+          "label": "Beige chaud"
+        }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding haut",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bas",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Quels sont les délais de livraison?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Réponse",
+          "default": "<p>Nous livrons sous 3 à 5 jours ouvrés en France métropolitaine. La livraison est gratuite dès 50€ d'achat.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Ouverte par défaut",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion",
+      "category": "WARMLYST",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "Quels sont les délais de livraison?",
+            "answer": "<p>Nous livrons sous 3 à 5 jours ouvrés en France métropolitaine. La livraison est gratuite dès 50€ d'achat.</p>",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Quelle est votre politique de retour?",
+            "answer": "<p>Vous disposez de 30 jours pour retourner vos articles. Les retours sont gratuits et le remboursement est effectué sous 7 jours.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Les produits sont-ils éco-responsables?",
+            "answer": "<p>Oui! Nous sélectionnons des matériaux durables et travaillons avec des fournisseurs certifiés pour minimiser notre impact environnemental.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Comment entretenir mes accessoires d'hiver?",
+            "answer": "<p>Chaque produit est livré avec des instructions d'entretien spécifiques. En général, un lavage à la main à l'eau froide est recommandé.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
