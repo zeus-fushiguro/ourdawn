@@ -269,9 +269,9 @@
   align-items: center;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
-  padding: var(--spacing-md);
-  background-color: var(--color-warm-beige-light);
-  border-radius: var(--border-radius-lg);
+  padding: 0; /* Removed padding */
+  background-color: transparent; /* Removed beige background */
+  border-radius: 0; /* No border radius */
 }
 
 .active-filters__list {

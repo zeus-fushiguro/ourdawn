@@ -1,0 +1,209 @@
+/*
+ * WARMLYST Global Overrides
+ * Corrections du thème Dawn pour l'identité WARMLYST
+ */
+
+/* ============================================
+   1. CONTENEUR GLOBAL - Max-width 1400px
+   ============================================ */
+
+/* Override Dawn page-width for better centered content */
+:root {
+  --page-width: 1400px; /* Réduit de ~1600px par défaut */
+}
+
+.page-width,
+.page-width-desktop,
+main,
+.shopify-section {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Conteneurs WARMLYST respectent aussi cette limite */
+.container-default,
+.container-wide {
+  max-width: 1400px;
+}
+
+/* Le header et footer inner doivent aussi être limités */
+.header,
+.footer-warmlyst .container-default,
+.footer-main .container-default,
+.footer-bottom .container-default {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   2. TYPOGRAPHIE - Poppins pour les titres
+   ============================================ */
+
+/* Import Poppins from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* Override la font heading partout */
+:root {
+  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Force Poppins sur tous les titres */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.text-heading,
+.heading,
+.title,
+.product__title,
+.card__heading,
+.footer-column__title,
+.collection-grid__title,
+.hero-cocooning__title {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+}
+
+/* Poppins Bold pour les display titles */
+h1, .h1,
+.hero-cocooning__title {
+  font-weight: 700 !important;
+}
+
+/* ============================================
+   3. BARRE DE FILTRES - Fix layout
+   ============================================ */
+
+/* Retire le background beige qui prend toute la largeur */
+.collection-grid__active-filters {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  margin-bottom: var(--spacing-md);
+}
+
+.active-filters__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+/* Le bouton "Tout effacer" plus discret */
+.active-filters__clear {
+  background: transparent !important;
+  border: none;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-charcoal-light) !important;
+  text-decoration: none;
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  transition: color var(--transition-fast);
+}
+
+.active-filters__clear:hover {
+  color: var(--color-cocooning-orange) !important;
+  text-decoration: underline;
+}
+
+/* Les filtres actifs plus compacts */
+.active-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 6px 12px;
+  background-color: var(--color-off-white);
+  border: 1px solid var(--color-warm-beige-dark);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-small);
+  color: var(--color-charcoal);
+}
+
+/* ============================================
+   4. FOOTER TRUST BAR - Centrer les icônes
+   ============================================ */
+
+/* Force le centrage avec gap au lieu de space-between */
+.trust-bar__grid {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center;
+  gap: 3rem !important;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 749px) {
+  .trust-bar__grid {
+    gap: 2rem !important;
+  }
+}
+
+/* Les items du trust bar */
+.trust-bar__item {
+  flex: 0 1 auto; /* Ne s'étire pas */
+  max-width: 280px;
+}
+
+/* ============================================
+   5. CORRECTIONS ADDITIONNELLES
+   ============================================ */
+
+/* Buttons premium héritent de Poppins */
+.btn-warmlyst,
+.button,
+button {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+}
+
+/* Navigation aussi en Poppins */
+.header__menu-link,
+.footer-menu__link {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+}
+
+/* Product cards titles en Poppins */
+.card-product__title,
+.card__heading,
+.product__title {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Assure que le contenu ne touche jamais les bords sur très grand écran */
+@media screen and (min-width: 1600px) {
+  .page-width,
+  .page-width-desktop,
+  main,
+  .header,
+  .footer-warmlyst .container-default {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ============================================
+   6. RESPONSIVE - Mobile adjustments
+   ============================================ */
+
+@media screen and (max-width: 749px) {
+  /* Sur mobile, le contenu peut être un peu plus large */
+  .page-width {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Trust bar stack vertical sur mobile */
+  .trust-bar__grid {
+    flex-direction: column;
+    gap: 1.5rem !important;
+  }
+
+  .trust-bar__item {
+    width: 100%;
+    max-width: 100%;
+  }
+}
