@@ -1,0 +1,254 @@
+{{ 'section-product-showcase-warmlyst.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-showcase.js' | asset_url }}" defer="defer"></script>
+
+<div class="product-showcase product-showcase--{{ section.settings.layout }} color-{{ section.settings.color_scheme }}"
+     data-section-id="{{ section.id }}"
+     style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+
+    {%- if section.settings.title != blank or section.settings.description != blank -%}
+    <div class="product-showcase__header">
+      {%- if section.settings.badge_text != blank -%}
+        {% render 'badge-seasonal',
+          type: section.settings.badge_type,
+          text: section.settings.badge_text
+        %}
+      {%- endif -%}
+
+      {%- if section.settings.title != blank -%}
+        <h2 class="product-showcase__title {{ section.settings.heading_size }}">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="product-showcase__description rte">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+
+    <div class="product-showcase__grid product-showcase__grid--{{ section.settings.columns_desktop }}-col">
+      {%- liquid
+        assign collection = collections[section.settings.collection]
+        assign products_to_show = section.settings.products_to_show
+
+        if section.settings.featured_product_1 != blank
+          assign product_1 = all_products[section.settings.featured_product_1]
+        endif
+        if section.settings.featured_product_2 != blank
+          assign product_2 = all_products[section.settings.featured_product_2]
+        endif
+        if section.settings.featured_product_3 != blank
+          assign product_3 = all_products[section.settings.featured_product_3]
+        endif
+        if section.settings.featured_product_4 != blank
+          assign product_4 = all_products[section.settings.featured_product_4]
+        endif
+      -%}
+
+      {%- if product_1 != blank -%}
+        {% render 'product-showcase-card', product: product_1, index: 1, show_quick_add: section.settings.show_quick_add %}
+      {%- endif -%}
+
+      {%- if product_2 != blank -%}
+        {% render 'product-showcase-card', product: product_2, index: 2, show_quick_add: section.settings.show_quick_add %}
+      {%- endif -%}
+
+      {%- if product_3 != blank -%}
+        {% render 'product-showcase-card', product: product_3, index: 3, show_quick_add: section.settings.show_quick_add %}
+      {%- endif -%}
+
+      {%- if product_4 != blank -%}
+        {% render 'product-showcase-card', product: product_4, index: 4, show_quick_add: section.settings.show_quick_add %}
+      {%- endif -%}
+
+      {%- comment -%} Fill remaining slots from collection {%- endcomment -%}
+      {%- if collection != blank -%}
+        {%- assign manual_count = 0 -%}
+        {%- if product_1 != blank %}{% assign manual_count = manual_count | plus: 1 %}{% endif -%}
+        {%- if product_2 != blank %}{% assign manual_count = manual_count | plus: 1 %}{% endif -%}
+        {%- if product_3 != blank %}{% assign manual_count = manual_count | plus: 1 %}{% endif -%}
+        {%- if product_4 != blank %}{% assign manual_count = manual_count | plus: 1 %}{% endif -%}
+
+        {%- assign remaining = products_to_show | minus: manual_count -%}
+        {%- if remaining > 0 -%}
+          {%- for product in collection.products limit: remaining -%}
+            {% render 'product-showcase-card', product: product, index: forloop.index, show_quick_add: section.settings.show_quick_add %}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all and section.settings.collection != blank -%}
+      <div class="product-showcase__footer">
+        {% render 'button-premium',
+          text: section.settings.button_text,
+          url: collections[section.settings.collection].url,
+          style: 'outline',
+          icon: 'chevron-right'
+        %}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Products WARMLYST",
+  "class": "section-product-showcase-warmlyst",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Nos Coups de Cœur"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Taille du titre",
+      "options": [
+        { "value": "h3", "label": "Petit" },
+        { "value": "h2", "label": "Moyen" },
+        { "value": "h1", "label": "Grand" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Texte du badge"
+    },
+    {
+      "type": "select",
+      "id": "badge_type",
+      "label": "Type de badge",
+      "options": [
+        { "value": "seasonal", "label": "Saisonnier" },
+        { "value": "new", "label": "Nouveau" },
+        { "value": "eco", "label": "Écologique" },
+        { "value": "limited", "label": "Limité" }
+      ],
+      "default": "seasonal"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection source"
+    },
+    {
+      "type": "product",
+      "id": "featured_product_1",
+      "label": "Produit vedette 1"
+    },
+    {
+      "type": "product",
+      "id": "featured_product_2",
+      "label": "Produit vedette 2"
+    },
+    {
+      "type": "product",
+      "id": "featured_product_3",
+      "label": "Produit vedette 3"
+    },
+    {
+      "type": "product",
+      "id": "featured_product_4",
+      "label": "Produit vedette 4"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Nombre de produits",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Colonnes (desktop)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Style d'affichage",
+      "options": [
+        { "value": "grid", "label": "Grille" },
+        { "value": "featured", "label": "Vedette (1 grand + petits)" }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Afficher ajout rapide au panier",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Afficher bouton 'Tout voir'",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texte du bouton",
+      "default": "Voir toute la collection"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Jeu de couleurs",
+      "options": [
+        { "value": "background-1", "label": "Arrière-plan 1" },
+        { "value": "background-2", "label": "Arrière-plan 2" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacement haut",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacement bas",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products WARMLYST",
+      "settings": {
+        "title": "Nos Coups de Cœur",
+        "badge_text": "Best Sellers",
+        "products_to_show": 4
+      }
+    }
+  ]
+}
+{% endschema %}

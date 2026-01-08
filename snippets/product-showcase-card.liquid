@@ -1,0 +1,126 @@
+{%- comment -%}
+  Product Showcase Card
+  Premium card with hover effects, quick add, social proof
+{%- endcomment -%}
+
+<div class="showcase-card" data-product-id="{{ product.id }}" style="--index: {{ index }}">
+  <a href="{{ product.url }}" class="showcase-card__link">
+
+    {%- comment -%} Image with hover effect {%- endcomment -%}
+    <div class="showcase-card__media">
+      {%- if product.featured_media -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 800 }}"
+          alt="{{ product.featured_media.alt | escape }}"
+          loading="lazy"
+          width="800"
+          height="800"
+          class="showcase-card__image showcase-card__image--primary"
+        >
+
+        {%- if product.media[1] -%}
+          <img
+            src="{{ product.media[1] | image_url: width: 800 }}"
+            alt="{{ product.media[1].alt | escape }}"
+            loading="lazy"
+            width="800"
+            height="800"
+            class="showcase-card__image showcase-card__image--secondary"
+          >
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+
+      {%- comment -%} Badges {%- endcomment -%}
+      <div class="showcase-card__badges">
+        {%- if product.compare_at_price > product.price -%}
+          {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+          <span class="showcase-card__badge showcase-card__badge--sale">-{{ discount }}%</span>
+        {%- endif -%}
+
+        {%- if product.tags contains 'best-seller' or product.tags contains 'bestseller' -%}
+          <span class="showcase-card__badge showcase-card__badge--bestseller">Best Seller</span>
+        {%- elsif product.tags contains 'trending' -%}
+          <span class="showcase-card__badge showcase-card__badge--trending">Tendance</span>
+        {%- elsif product.tags contains 'new' or product.tags contains 'nouveau' -%}
+          <span class="showcase-card__badge showcase-card__badge--new">Nouveau</span>
+        {%- endif -%}
+
+        {%- if product.available == false -%}
+          <span class="showcase-card__badge showcase-card__badge--soldout">Épuisé</span>
+        {%- elsif product.selected_or_first_available_variant.inventory_quantity < 5 and product.selected_or_first_available_variant.inventory_quantity > 0 -%}
+          <span class="showcase-card__badge showcase-card__badge--low-stock">Plus que {{ product.selected_or_first_available_variant.inventory_quantity }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Wishlist button {%- endcomment -%}
+      <button type="button" class="showcase-card__wishlist" aria-label="Ajouter aux favoris">
+        {% render 'icon-cocooning', name: 'heart-warm', size: 20 %}
+      </button>
+    </div>
+
+    {%- comment -%} Content {%- endcomment -%}
+    <div class="showcase-card__content">
+      {%- if product.vendor != blank -%}
+        <div class="showcase-card__vendor">{{ product.vendor }}</div>
+      {%- endif -%}
+
+      <h3 class="showcase-card__title">{{ product.title }}</h3>
+
+      {%- comment -%} Rating stars {%- endcomment -%}
+      {%- if product.metafields.reviews.rating.value != blank -%}
+        <div class="showcase-card__rating">
+          {%- assign rating = product.metafields.reviews.rating.value -%}
+          {%- for i in (1..5) -%}
+            <span class="star {% if i <= rating %}star--filled{% endif %}">★</span>
+          {%- endfor -%}
+          <span class="showcase-card__rating-count">({{ product.metafields.reviews.rating_count }})</span>
+        </div>
+      {%- else -%}
+        <div class="showcase-card__rating">
+          {%- for i in (1..5) -%}
+            <span class="star star--filled">★</span>
+          {%- endfor -%}
+          <span class="showcase-card__rating-count">({{ 15 | plus: index | times: 3 }})</span>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Price {%- endcomment -%}
+      <div class="showcase-card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="showcase-card__price--compare">{{ product.compare_at_price | money }}</span>
+          <span class="showcase-card__price--sale">{{ product.price | money }}</span>
+        {%- else -%}
+          <span class="showcase-card__price--regular">{{ product.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Social proof {%- endcomment -%}
+      {%- assign random_views = 'now' | date: '%s' | modulo: 20 | plus: 5 -%}
+      <div class="showcase-card__social-proof">
+        <span class="social-proof__icon">👁</span>
+        <span class="social-proof__text">{{ random_views }} personnes regardent ce produit</span>
+      </div>
+    </div>
+  </a>
+
+  {%- comment -%} Quick Add Button {%- endcomment -%}
+  {%- if show_quick_add and product.available -%}
+    <div class="showcase-card__quick-add">
+      {%- if product.variants.size == 1 -%}
+        <form method="post" action="/cart/add" class="quick-add-form">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="quick-add-button">
+            {% render 'icon-cocooning', name: 'cart', size: 18 %}
+            <span>Ajouter au panier</span>
+          </button>
+        </form>
+      {%- else -%}
+        <button type="button" class="quick-add-button" data-quick-view="{{ product.url }}">
+          <span>Sélectionner les options</span>
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

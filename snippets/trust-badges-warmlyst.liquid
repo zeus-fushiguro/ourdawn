@@ -1,0 +1,196 @@
+{%- comment -%}
+  Trust Badges WARMLYST
+  Reusable trust indicators for conversion
+
+  Usage:
+  {% render 'trust-badges-warmlyst', layout: 'horizontal', style: 'default' %}
+
+  Parameters:
+  - layout: 'horizontal' | 'vertical' | 'grid' (default: 'horizontal')
+  - style: 'default' | 'minimal' | 'cards' (default: 'default')
+  - badges: 'all' | 'delivery,returns,secure,eco' (default: 'all')
+{%- endcomment -%}
+
+{%- liquid
+  assign layout = layout | default: 'horizontal'
+  assign style = style | default: 'default'
+  assign badges_to_show = badges | default: 'all'
+
+  if badges_to_show == 'all'
+    assign show_delivery = true
+    assign show_returns = true
+    assign show_secure = true
+    assign show_eco = true
+  else
+    assign badges_array = badges_to_show | split: ','
+    assign show_delivery = false
+    assign show_returns = false
+    assign show_secure = false
+    assign show_eco = false
+
+    for badge in badges_array
+      case badge
+        when 'delivery'
+          assign show_delivery = true
+        when 'returns'
+          assign show_returns = true
+        when 'secure'
+          assign show_secure = true
+        when 'eco'
+          assign show_eco = true
+      endcase
+    endfor
+  endif
+-%}
+
+<style>
+  .trust-badges {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .trust-badges--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .trust-badges--vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .trust-badges--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: transform 0.3s ease;
+  }
+
+  .trust-badges--default .trust-badge:hover {
+    transform: translateY(-2px);
+  }
+
+  .trust-badge__icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-warm-beige-light), var(--color-cream));
+    color: var(--color-cocooning-orange);
+  }
+
+  .trust-badges--minimal .trust-badge__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .trust-badges--cards .trust-badge {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .trust-badge__content {
+    flex: 1;
+  }
+
+  .trust-badge__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 0.25rem;
+  }
+
+  .trust-badges--minimal .trust-badge__title {
+    font-size: 0.9375rem;
+  }
+
+  .trust-badge__description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.4;
+  }
+
+  .trust-badges--minimal .trust-badge__description {
+    display: none;
+  }
+
+  @media (max-width: 749px) {
+    .trust-badges--horizontal {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .trust-badge {
+      width: 100%;
+    }
+
+    .trust-badges--cards .trust-badge {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+</style>
+
+<div class="trust-badges trust-badges--{{ layout }} trust-badges--{{ style }}">
+  {%- if show_delivery -%}
+    <div class="trust-badge trust-badge--delivery">
+      <div class="trust-badge__icon">
+        {% render 'icon-cocooning', name: 'delivery', size: 24 %}
+      </div>
+      <div class="trust-badge__content">
+        <div class="trust-badge__title">Livraison Gratuite</div>
+        <div class="trust-badge__description">Dès 50€ d'achat en France</div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if show_returns -%}
+    <div class="trust-badge trust-badge--returns">
+      <div class="trust-badge__icon">
+        {% render 'icon-cocooning', name: 'shield', size: 24 %}
+      </div>
+      <div class="trust-badge__content">
+        <div class="trust-badge__title">Retours Gratuits</div>
+        <div class="trust-badge__description">Sous 30 jours sans frais</div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if show_secure -%}
+    <div class="trust-badge trust-badge--secure">
+      <div class="trust-badge__icon">
+        {% render 'icon-cocooning', name: 'shield', size: 24 %}
+      </div>
+      <div class="trust-badge__content">
+        <div class="trust-badge__title">Paiement Sécurisé</div>
+        <div class="trust-badge__description">Transactions SSL protégées</div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if show_eco -%}
+    <div class="trust-badge trust-badge--eco">
+      <div class="trust-badge__icon">
+        {% render 'icon-cocooning', name: 'eco-leaf', size: 24 %}
+      </div>
+      <div class="trust-badge__content">
+        <div class="trust-badge__title">Éco-Responsable</div>
+        <div class="trust-badge__description">Matériaux durables certifiés</div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>

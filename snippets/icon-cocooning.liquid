@@ -4,7 +4,7 @@
   Accepts:
   - name: string - Icon name (required)
     Available: 'snowflake', 'fire', 'heart-warm', 'delivery', 'shield', 'eco-leaf',
-              'star', 'chevron-down', 'chevron-right', 'close', 'menu', 'cart', 'search'
+              'star', 'chevron-down', 'chevron-right', 'chevron-left', 'close', 'menu', 'cart', 'search'
   - size: number - Icon size in pixels (default: 24)
   - color: string - Icon color, uses currentColor by default
   - class: string - Additional CSS classes
@@ -63,6 +63,9 @@
 
     {%- when 'chevron-right' -%}
       <path d="M9 18L15 12L9 6" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    {%- when 'chevron-left' -%}
+      <path d="M15 18L9 12L15 6" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 
     {%- when 'close' -%}
       <path d="M18 6L6 18M6 6L18 18" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
