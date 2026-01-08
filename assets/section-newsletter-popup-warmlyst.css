@@ -68,8 +68,89 @@
 
 @media (max-width: 749px) {
   .newsletter-popup__modal {
-    max-width: 100%;
+    max-width: calc(100% - 2rem);
     margin: 1rem;
+    border-radius: 16px;
+  }
+
+  .newsletter-popup__content {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-popup__image {
+    max-height: 180px;
+    min-height: 180px;
+  }
+
+  .newsletter-popup__image img {
+    object-position: center;
+  }
+
+  .newsletter-popup__text {
+    padding: 1.5rem;
+  }
+
+  .newsletter-popup__title {
+    font-size: 1.25rem !important;
+    margin: 0.75rem 0;
+  }
+
+  .newsletter-popup__description {
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Discount code smaller on mobile */
+  .discount-code {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .discount-code__label {
+    font-size: 0.6875rem;
+  }
+
+  .discount-code__value {
+    font-size: 1.25rem;
+  }
+
+  /* Form stacked on mobile */
+  .newsletter-popup__input-wrapper {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .newsletter-popup__input {
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .newsletter-popup__button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Trust indicators stacked */
+  .newsletter-popup__trust {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+  }
+
+  .trust-indicator {
+    font-size: 0.8125rem;
+  }
+
+  /* Close button positioned better on mobile */
+  .newsletter-popup__close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .newsletter-popup__no-thanks {
+    font-size: 0.8125rem;
+    margin-bottom: 0.75rem;
   }
 }
 
