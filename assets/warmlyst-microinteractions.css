@@ -1,0 +1,501 @@
+/**
+ * WARMLYST Micro-interactions
+ * Premium hover effects, animations, and polish
+ */
+
+/* ============================================
+   BUTTON INTERACTIONS
+   ============================================ */
+
+.btn,
+.button,
+button[type="submit"],
+button[type="button"],
+.btn-warmlyst,
+.quick-add-button,
+.newsletter-popup__button {
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-base), var(--transition-shadow);
+}
+
+/* Ripple Effect */
+.btn::before,
+.button::before,
+.btn-warmlyst::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:active::before,
+.button:active::before,
+.btn-warmlyst:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Hover Lift */
+.btn:hover,
+.button:hover,
+.btn-warmlyst:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+
+.btn:active,
+.button:active,
+.btn-warmlyst:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   CARD INTERACTIONS
+   ============================================ */
+
+.card,
+.showcase-card,
+.testimonial-card,
+.product-card {
+  transition: var(--transition-transform), var(--transition-shadow);
+}
+
+.card:hover,
+.showcase-card:hover,
+.testimonial-card:hover,
+.product-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Card Image Scale */
+.card:hover img,
+.showcase-card:hover .showcase-card__image--primary,
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+.card img,
+.showcase-card__image,
+.product-card img {
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* ============================================
+   LINK INTERACTIONS
+   ============================================ */
+
+a:not(.btn):not(.button) {
+  position: relative;
+  display: inline-block;
+}
+
+a:not(.btn):not(.button)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary-500);
+  transition: width var(--duration-base) var(--ease-out);
+}
+
+a:not(.btn):not(.button):hover::after {
+  width: 100%;
+}
+
+/* ============================================
+   INPUT INTERACTIONS
+   ============================================ */
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+textarea,
+select {
+  transition: var(--transition-colors), var(--transition-shadow);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(230, 126, 80, 0.1);
+  outline: none;
+}
+
+/* Label Float Animation */
+.input-group {
+  position: relative;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  transform: translateY(-1.5rem) scale(0.85);
+  color: var(--color-primary-500);
+}
+
+.input-group label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  pointer-events: none;
+  transition: transform var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out);
+  transform-origin: left center;
+}
+
+/* ============================================
+   IMAGE HOVER EFFECTS
+   ============================================ */
+
+.image-hover-zoom {
+  overflow: hidden;
+}
+
+.image-hover-zoom img {
+  transition: transform 0.6s var(--ease-out);
+}
+
+.image-hover-zoom:hover img {
+  transform: scale(1.1);
+}
+
+/* Parallax on Scroll */
+.parallax {
+  transition: transform 0.3s ease-out;
+}
+
+/* ============================================
+   BADGE ANIMATIONS
+   ============================================ */
+
+.badge,
+.showcase-card__badge,
+[class*="badge-"] {
+  animation: fadeInScale 0.4s var(--ease-out) backwards;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.badge:nth-child(1) { animation-delay: 0.1s; }
+.badge:nth-child(2) { animation-delay: 0.2s; }
+.badge:nth-child(3) { animation-delay: 0.3s; }
+
+/* Pulse Animation for urgent badges */
+.badge--urgent,
+.showcase-card__badge--low-stock,
+.countdown-timer {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+/* Skeleton Loader */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-beige-200) 0%,
+    var(--color-beige-100) 50%,
+    var(--color-beige-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-beige-300);
+  border-top-color: var(--color-primary-500);
+  border-radius: var(--radius-full);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+
+/* Fade In On Scroll */
+.fade-in-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s var(--ease-out),
+              transform 0.6s var(--ease-out);
+}
+
+.fade-in-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Animation for Grids */
+.grid-stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s var(--ease-out) forwards;
+}
+
+.grid-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.grid-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+.grid-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+.grid-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+.grid-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+.grid-stagger > *:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   MODAL/POPUP ANIMATIONS
+   ============================================ */
+
+.modal,
+.popup,
+.newsletter-popup {
+  animation: modalFadeIn 0.4s var(--ease-out);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-backdrop {
+  animation: backdropFadeIn 0.3s ease-out;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   NOTIFICATION TOAST
+   ============================================ */
+
+.toast,
+.notification {
+  animation: slideInRight 0.4s var(--ease-out);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast.toast-exit,
+.notification.notification-exit {
+  animation: slideOutRight 0.3s var(--ease-in) forwards;
+}
+
+@keyframes slideOutRight {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================
+   ICON INTERACTIONS
+   ============================================ */
+
+.icon-hover {
+  transition: var(--transition-transform);
+}
+
+.icon-hover:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Heart Icon Animation */
+.icon-heart:active,
+.wishlist-button:active .icon {
+  animation: heartBeat 0.6s ease;
+}
+
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Cart Icon Bounce */
+.icon-cart.added {
+  animation: cartBounce 0.6s ease;
+}
+
+@keyframes cartBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ============================================
+   GLASSMORPHISM EFFECTS
+   ============================================ */
+
+.glass {
+  background: var(--glass-light);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: var(--glass-dark);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-inverse);
+}
+
+/* ============================================
+   NUMBER COUNTER ANIMATION
+   ============================================ */
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.count-up {
+  animation: countUp 0.6s var(--ease-out);
+}
+
+/* ============================================
+   PROGRESS BAR ANIMATIONS
+   ============================================ */
+
+.progress-bar {
+  position: relative;
+  height: 4px;
+  background: var(--color-beige-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.6s var(--ease-out);
+}
+
+/* Indeterminate Progress */
+.progress-bar--indeterminate .progress-bar__fill {
+  width: 40%;
+  animation: indeterminateProgress 1.5s infinite;
+}
+
+@keyframes indeterminateProgress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY - Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

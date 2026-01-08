@@ -38,37 +38,27 @@ main,
 }
 
 /* ============================================
-   2. TYPOGRAPHIE - Poppins pour les titres
+   2. TYPOGRAPHIE - Design System v2
    ============================================ */
 
-/* Import Poppins from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+/* Typography is now handled by warmlyst-design-system-v2.css */
+/* DM Serif Display for headings, Plus Jakarta Sans for subheadings, Manrope for body */
 
-/* Override la font heading partout */
-:root {
-  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+/* Additional typography overrides */
+.hero-cocooning__title,
+.product-showcase__title,
+.testimonials-carousel__title {
+  font-family: var(--font-heading) !important;
+  font-weight: var(--font-weight-normal) !important;
+  letter-spacing: var(--letter-spacing-tight) !important;
 }
 
-/* Force Poppins sur tous les titres */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.text-heading,
-.heading,
-.title,
-.product__title,
+/* Subheadings use Plus Jakarta Sans */
 .card__heading,
-.footer-column__title,
-.collection-grid__title,
-.hero-cocooning__title {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.01em;
-}
-
-/* Poppins Bold pour les display titles */
-h1, .h1,
-.hero-cocooning__title {
-  font-weight: 700 !important;
+.product__title,
+.footer-column__title {
+  font-family: var(--font-subheading) !important;
+  font-weight: var(--font-weight-semibold) !important;
 }
 
 /* ============================================
@@ -147,30 +137,52 @@ h1, .h1,
 }
 
 /* ============================================
-   5. CORRECTIONS ADDITIONNELLES
+   5. ENHANCED INTERACTIONS & POLISH
    ============================================ */
 
-/* Buttons premium héritent de Poppins */
+/* Buttons use new design system */
 .btn-warmlyst,
 .button,
 button {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-weight: 600;
+  font-family: var(--font-subheading);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-button);
+  transition: var(--transition-base), var(--transition-shadow);
 }
 
-/* Navigation aussi en Poppins */
+.btn-warmlyst:hover,
+.button:hover,
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+
+/* Navigation with new typography */
 .header__menu-link,
 .footer-menu__link {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-weight: 500;
+  font-family: var(--font-subheading);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-colors);
 }
 
-/* Product cards titles en Poppins */
-.card-product__title,
-.card__heading,
-.product__title {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-weight: 600 !important;
+.header__menu-link:hover,
+.footer-menu__link:hover {
+  color: var(--color-primary-600);
+}
+
+/* Product cards with refined shadows */
+.card-product,
+.card,
+.showcase-card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-transform), var(--transition-shadow);
+}
+
+.card-product:hover,
+.card:hover,
+.showcase-card:hover {
+  box-shadow: var(--shadow-xl);
 }
 
 /* Assure que le contenu ne touche jamais les bords sur très grand écran */

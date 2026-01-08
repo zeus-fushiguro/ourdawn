@@ -1,0 +1,475 @@
+/**
+ * WARMLYST Design System v2.0
+ * Modern, Cosy, Premium
+ * Complete redesign with refined typography, colors, and interactions
+ */
+
+/* ============================================
+   TYPOGRAPHY - Modern & Cosy
+   ============================================ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Font Families */
+  --font-heading: 'DM Serif Display', Georgia, serif;
+  --font-subheading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Font Sizes - Fluid Typography */
+  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);
+  --font-size-xl: clamp(1.375rem, 1.2rem + 0.875vw, 1.75rem);
+  --font-size-2xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
+  --font-size-3xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);
+  --font-size-4xl: clamp(3rem, 2rem + 5vw, 5rem);
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.7;
+  --line-height-loose: 2;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+}
+
+/* ============================================
+   COLORS - Warm Sanctuary Palette
+   ============================================ */
+
+:root {
+  /* Primary - Warm Orange */
+  --color-primary-50: #FFF4ED;
+  --color-primary-100: #FFE6D5;
+  --color-primary-200: #FECCAA;
+  --color-primary-300: #FDAC74;
+  --color-primary-400: #FB8D4D;
+  --color-primary-500: #E67E50;
+  --color-primary-600: #D4672E;
+  --color-primary-700: #B4501F;
+  --color-primary-800: #93421D;
+  --color-primary-900: #78391D;
+
+  /* Beige/Cream - Warm Neutrals */
+  --color-beige-50: #FDFBF7;
+  --color-beige-100: #F9F5EE;
+  --color-beige-200: #F5EBE0;
+  --color-beige-300: #EBD9C8;
+  --color-beige-400: #DCC5AC;
+  --color-beige-500: #C9AB8E;
+  --color-beige-600: #B08968;
+  --color-beige-700: #8B6F4F;
+  --color-beige-800: #6F5B42;
+  --color-beige-900: #5C4C38;
+
+  /* Terracotta - Accent */
+  --color-terracotta-50: #FDF5F3;
+  --color-terracotta-100: #FCE8E3;
+  --color-terracotta-200: #F9D5CC;
+  --color-terracotta-300: #F4B6A8;
+  --color-terracotta-400: #EC8F7A;
+  --color-terracotta-500: #C87461;
+  --color-terracotta-600: #B55A49;
+  --color-terracotta-700: #974939;
+  --color-terracotta-800: #7D3F33;
+  --color-terracotta-900: #68392E;
+
+  /* Sage - Nature/Eco */
+  --color-sage-50: #F6F8F6;
+  --color-sage-100: #E8EDE7;
+  --color-sage-200: #D2DDD0;
+  --color-sage-300: #A8B5A0;
+  --color-sage-400: #8FA285;
+  --color-sage-500: #6B856A;
+  --color-sage-600: #556A54;
+  --color-sage-700: #455545;
+  --color-sage-800: #39453A;
+  --color-sage-900: #303A30;
+
+  /* Charcoal - Dark Text */
+  --color-charcoal-50: #F7F6F5;
+  --color-charcoal-100: #E8E6E3;
+  --color-charcoal-200: #D3CFC9;
+  --color-charcoal-300: #B5ADA4;
+  --color-charcoal-400: #948A7F;
+  --color-charcoal-500: #726861;
+  --color-charcoal-600: #5A5249;
+  --color-charcoal-700: #4A433C;
+  --color-charcoal-800: #3E352E;
+  --color-charcoal-900: #352E28;
+
+  /* Semantic Colors */
+  --color-success: #6B856A;
+  --color-warning: #E67E50;
+  --color-error: #C87461;
+  --color-info: #A8B5A0;
+
+  /* Backgrounds */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #FDFBF7;
+  --color-bg-tertiary: #F5EBE0;
+  --color-bg-overlay: rgba(62, 53, 46, 0.7);
+
+  /* Text Colors */
+  --color-text-primary: #3E352E;
+  --color-text-secondary: #5A5249;
+  --color-text-tertiary: #948A7F;
+  --color-text-inverse: #FFFFFF;
+
+  /* Borders */
+  --color-border-light: #E8E6E3;
+  --color-border-medium: #D3CFC9;
+  --color-border-dark: #B5ADA4;
+}
+
+/* Legacy color mappings for backward compatibility */
+:root {
+  --color-cocooning-orange-light: var(--color-primary-400);
+  --color-cocooning-orange: var(--color-primary-500);
+  --color-warm-beige-light: var(--color-beige-200);
+  --color-warm-beige: var(--color-beige-300);
+  --color-warm-beige-dark: var(--color-beige-600);
+  --color-brown: var(--color-charcoal-600);
+  --color-cream: var(--color-beige-50);
+  --color-off-white: var(--color-beige-100);
+  --color-charcoal: var(--color-charcoal-800);
+  --color-charcoal-light: var(--color-charcoal-400);
+}
+
+/* ============================================
+   SPACING - 8px System
+   ============================================ */
+
+:root {
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+  --spacing-24: 6rem;     /* 96px */
+  --spacing-32: 8rem;     /* 128px */
+
+  /* Semantic Spacing */
+  --spacing-xs: var(--spacing-2);
+  --spacing-sm: var(--spacing-4);
+  --spacing-md: var(--spacing-6);
+  --spacing-lg: var(--spacing-8);
+  --spacing-xl: var(--spacing-12);
+  --spacing-2xl: var(--spacing-16);
+  --spacing-3xl: var(--spacing-24);
+
+  /* Section Spacing */
+  --section-padding-mobile: var(--spacing-12);
+  --section-padding-tablet: var(--spacing-16);
+  --section-padding-desktop: var(--spacing-24);
+}
+
+/* ============================================
+   SHADOWS - Soft & Organic
+   ============================================ */
+
+:root {
+  /* Elevation Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(62, 53, 46, 0.05);
+  --shadow-sm: 0 2px 4px -1px rgba(62, 53, 46, 0.06),
+               0 1px 2px -1px rgba(62, 53, 46, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(62, 53, 46, 0.08),
+               0 2px 4px -2px rgba(62, 53, 46, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(62, 53, 46, 0.1),
+               0 4px 6px -4px rgba(62, 53, 46, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(62, 53, 46, 0.1),
+               0 8px 10px -6px rgba(62, 53, 46, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(62, 53, 46, 0.15);
+
+  /* Colored Shadows */
+  --shadow-primary: 0 10px 25px -5px rgba(230, 126, 80, 0.25);
+  --shadow-primary-lg: 0 20px 40px -10px rgba(230, 126, 80, 0.3);
+
+  /* Inner Shadows */
+  --shadow-inner: inset 0 2px 4px 0 rgba(62, 53, 46, 0.05);
+}
+
+/* ============================================
+   BORDER RADIUS - Organic Curves
+   ============================================ */
+
+:root {
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-2xl: 1.25rem;  /* 20px */
+  --radius-3xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
+
+  /* Semantic Radius */
+  --radius-button: var(--radius-lg);
+  --radius-card: var(--radius-xl);
+  --radius-modal: var(--radius-2xl);
+  --radius-input: var(--radius-md);
+}
+
+/* ============================================
+   TRANSITIONS - Smooth & Premium
+   ============================================ */
+
+:root {
+  /* Durations */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+
+  /* Easing */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Common Transitions */
+  --transition-base: all var(--duration-base) var(--ease-in-out);
+  --transition-colors: color var(--duration-base) var(--ease-in-out),
+                       background-color var(--duration-base) var(--ease-in-out),
+                       border-color var(--duration-base) var(--ease-in-out);
+  --transition-transform: transform var(--duration-base) var(--ease-in-out);
+  --transition-shadow: box-shadow var(--duration-base) var(--ease-in-out);
+}
+
+/* ============================================
+   GRADIENTS - Warm & Subtle
+   ============================================ */
+
+:root {
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-primary-600) 100%);
+  --gradient-warm: linear-gradient(135deg, var(--color-beige-200) 0%, var(--color-beige-400) 100%);
+  --gradient-sunset: linear-gradient(135deg, var(--color-primary-300) 0%, var(--color-terracotta-400) 100%);
+  --gradient-sage: linear-gradient(135deg, var(--color-sage-200) 0%, var(--color-sage-400) 100%);
+
+  /* Overlay Gradients */
+  --gradient-overlay-light: linear-gradient(180deg, rgba(62, 53, 46, 0) 0%, rgba(62, 53, 46, 0.3) 100%);
+  --gradient-overlay-dark: linear-gradient(180deg, rgba(62, 53, 46, 0.4) 0%, rgba(62, 53, 46, 0.8) 100%);
+}
+
+/* ============================================
+   EFFECTS - Glassmorphism & Blur
+   ============================================ */
+
+:root {
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+
+  /* Glassmorphism */
+  --glass-light: rgba(255, 255, 255, 0.7);
+  --glass-medium: rgba(255, 255, 255, 0.5);
+  --glass-dark: rgba(62, 53, 46, 0.5);
+}
+
+/* ============================================
+   Z-INDEX Scale
+   ============================================ */
+
+:root {
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-notification: 800;
+}
+
+/* ============================================
+   CONTAINER - Max Widths
+   ============================================ */
+
+:root {
+  --container-text: 65ch;
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1200px;
+  --container-2xl: 1400px;
+  --container-full: 100%;
+}
+
+/* ============================================
+   BASE STYLES - Typography Application
+   ============================================ */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+}
+
+h1, .h1 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-6);
+}
+
+h2, .h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-5);
+}
+
+h3, .h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-4);
+}
+
+h4, .h4 {
+  font-size: var(--font-size-lg);
+  font-family: var(--font-subheading);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-3);
+}
+
+h5, .h5 {
+  font-size: var(--font-size-base);
+  font-family: var(--font-subheading);
+  font-weight: var(--font-weight-semibold);
+}
+
+h6, .h6 {
+  font-size: var(--font-size-sm);
+  font-family: var(--font-subheading);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: var(--spacing-4);
+}
+
+/* Links */
+a {
+  color: var(--color-primary-600);
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+
+a:hover {
+  color: var(--color-primary-700);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-text-primary);
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Text Utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.font-heading { font-family: var(--font-heading); }
+.font-subheading { font-family: var(--font-subheading); }
+.font-body { font-family: var(--font-body); }
+
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* Color Utilities */
+.text-primary { color: var(--color-primary-500); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted { color: var(--color-text-tertiary); }
+
+.bg-primary { background-color: var(--color-bg-primary); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.bg-tertiary { background-color: var(--color-bg-tertiary); }
+
+/* Spacing Utilities */
+.container {
+  max-width: var(--container-2xl);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+  }
+}
+
+/* Shadow Utilities */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-primary { box-shadow: var(--shadow-primary); }
+
+/* Border Radius Utilities */
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Transition Utilities */
+.transition-base { transition: var(--transition-base); }
+.transition-colors { transition: var(--transition-colors); }
+.transition-transform { transition: var(--transition-transform); }
+.transition-shadow { transition: var(--transition-shadow); }

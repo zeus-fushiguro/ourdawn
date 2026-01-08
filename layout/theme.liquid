@@ -257,8 +257,9 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
-    {%- comment -%} WARMLYST Design System & Global Overrides {%- endcomment -%}
-    {{ 'warmlyst-design-system.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} WARMLYST Design System v2.0 - Modern, Cosy, Premium {%- endcomment -%}
+    {{ 'warmlyst-design-system-v2.css' | asset_url | stylesheet_tag }}
+    {{ 'warmlyst-microinteractions.css' | asset_url | stylesheet_tag }}
     {{ 'warmlyst-global-overrides.css' | asset_url | stylesheet_tag }}
 
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
