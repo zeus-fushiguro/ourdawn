@@ -1,7 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "footer_warmlyst_mfFrpt": {
+      "type": "footer-warmlyst",
+      "blocks": {
+        "link_list_pRkQhq": {
+          "type": "link_list",
+          "settings": {
+            "heading": "À propos",
+            "menu": "footer"
+          }
+        },
+        "link_list_GRq8Mi": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Service client",
+            "menu": "footer"
+          }
+        },
+        "text_AUkw4L": {
+          "type": "text",
+          "settings": {
+            "heading": "Notre boutique",
+            "subtext": "<p>Warmlyst, votre boutique d'accessoires d'hiver cocooning.</p>"
+          }
+        },
+        "newsletter_3UmQVE": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Restez au chaud",
+            "subtext": "Recevez nos nouveautés et offres exclusives"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_pRkQhq",
+        "link_list_GRq8Mi",
+        "text_AUkw4L",
+        "newsletter_3UmQVE"
+      ],
+      "name": "Footer Warmlyst",
+      "settings": {
+        "show_trust_bar": true,
+        "trust_1_title": "Livraison Gratuite",
+        "trust_1_text": "Dès 50€ d'achat",
+        "trust_2_title": "Retours Gratuits",
+        "trust_2_text": "Sous 30 jours",
+        "trust_3_title": "Paiement Sécurisé",
+        "trust_3_text": "CB, PayPal, Apple Pay",
+        "trust_4_title": "Éco-Responsable",
+        "trust_4_text": "Matériaux durables",
+        "show_social": true,
+        "show_payment_icons": true,
+        "copyright_text": "",
+        "padding_top": 0,
+        "padding_bottom": 32
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -23,7 +88,7 @@
           "type": "text",
           "settings": {
             "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
           }
         }
       },
@@ -32,10 +97,12 @@
         "footer-1",
         "footer-2"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
@@ -48,6 +115,7 @@
     }
   },
   "order": [
+    "footer_warmlyst_mfFrpt",
     "footer"
   ]
 }
