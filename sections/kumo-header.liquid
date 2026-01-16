@@ -1,435 +1,117 @@
-/* KUMO Shared Styles */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+{{ 'kumo-styles.css' | asset_url | stylesheet_tag }}
 
-/* CSS Reset */
-*, ::before, ::after {
-  box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-  border-color: #e5e7eb;
+<header class="kumo-fixed kumo-top-0 kumo-left-0 kumo-right-0 kumo-z-50 kumo-px-4 kumo-py-4">
+  <div class="kumo-container kumo-mx-auto">
+    <nav class="kumo-flex kumo-items-center kumo-justify-between kumo-bg-card/80 kumo-backdrop-blur-md kumo-rounded-full kumo-px-6 kumo-py-3 kumo-shadow-soft">
+      <!-- Left Navigation (Desktop) -->
+      <div class="kumo-hidden kumo-md:flex kumo-items-center kumo-gap-8">
+        {% for block in section.blocks %}
+          {% if block.type == 'nav_link' %}
+            <a
+              href="{{ block.settings.link }}"
+              class="kumo-text-sm kumo-font-medium kumo-text-muted-foreground kumo-hover:text-foreground kumo-transition-colors"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.label }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Mobile Menu Spacer -->
+      <div class="kumo-md:hidden kumo-w-10"></div>
+
+      <!-- Center Logo -->
+      <a href="{{ routes.root_url }}" class="kumo-flex kumo-items-center">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 200 | image_tag:
+            loading: 'eager',
+            class: 'kumo-h-12 kumo-w-auto kumo-object-contain',
+            alt: shop.name
+          }}
+        {% else %}
+          <span class="kumo-text-2xl kumo-font-bold kumo-text-foreground">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+
+      <!-- Right - Cart -->
+      <a
+        href="{{ routes.cart_url }}"
+        class="kumo-relative kumo-p-2 kumo-rounded-full kumo-hover:bg-accent kumo-transition-colors"
+        aria-label="Panier"
+      >
+        <svg class="kumo-w-5 kumo-h-5 kumo-text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+        </svg>
+        <span class="kumo-absolute kumo--top-0.5 kumo--right-0.5 kumo-w-4 kumo-h-4 kumo-bg-primary kumo-text-primary-foreground kumo-text-10px kumo-font-bold kumo-rounded-full kumo-flex kumo-items-center kumo-justify-center">
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "KUMO - Header",
+  "tag": "section",
+  "class": "kumo-section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Hauteur du logo",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Lien navigation",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texte",
+          "default": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Lien"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "KUMO - Header",
+      "blocks": [
+        {
+          "type": "nav_link",
+          "settings": {
+            "label": "Collection",
+            "link": "#collection"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "label": "Notre Histoire",
+            "link": "#story"
+          }
+        }
+      ]
+    }
+  ]
 }
-
-html {
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  -moz-tab-size: 4;
-  tab-size: 4;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  line-height: inherit;
-  font-family: 'Quicksand', sans-serif;
-  background-color: hsl(35, 45%, 97%);
-  color: hsl(25, 35%, 28%);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-image:
-    radial-gradient(ellipse at 20% 0%, hsla(35, 50%, 92%, 0.8) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, hsla(30, 40%, 90%, 0.6) 0%, transparent 50%);
-  background-attachment: fixed;
-}
-
-/* CSS Variables */
-:root {
-  --background: 35 45% 97%;
-  --foreground: 25 35% 28%;
-  --card: 38 50% 96%;
-  --primary: 25 30% 52%;
-  --primary-foreground: 38 60% 97%;
-  --secondary: 35 30% 90%;
-  --secondary-foreground: 25 35% 28%;
-  --muted-foreground: 25 20% 50%;
-  --accent: 30 35% 88%;
-  --border: 35 20% 88%;
-  --shadow-soft: 0 8px 32px -8px hsla(25, 30%, 40%, 0.12);
-  --shadow-float: 0 16px 48px -12px hsla(25, 30%, 40%, 0.18);
-  --shadow-glow: 0 4px 24px -4px hsla(35, 40%, 70%, 0.4);
-  --radius: 1.5rem;
-}
-
-/* Typography Reset */
-h1, h2, h3, h4, h5, h6 {
-  font-size: inherit;
-  font-weight: inherit;
-  margin: 0;
-}
-
-p { margin: 0; }
-
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-button {
-  font-family: inherit;
-  font-size: 100%;
-  font-weight: inherit;
-  line-height: inherit;
-  color: inherit;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/* Container */
-.kumo-container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
-}
-
-@media (min-width: 1200px) {
-  .kumo-container { max-width: 1200px; }
-}
-
-/* Components */
-.card-float {
-  border-radius: 2rem;
-  background-color: hsl(var(--card));
-  box-shadow: var(--shadow-float);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-}
-
-.card-float:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-glow), var(--shadow-float);
-}
-
-.btn-cozy {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  background-color: hsl(var(--primary));
-  padding: 1rem 2rem;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  font-weight: 600;
-  color: hsl(var(--primary-foreground));
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow-soft);
-}
-
-.btn-cozy:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--shadow-float);
-}
-
-.btn-cozy:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.trust-bar {
-  border-radius: 9999px;
-  background-color: hsl(var(--secondary) / 0.6);
-  backdrop-filter: blur(4px);
-}
-
-.section-title {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: hsl(var(--foreground));
-}
-
-@media (min-width: 768px) {
-  .section-title {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
-}
-
-.text-fluffy {
-  text-shadow: 0 4px 8px hsla(25, 30%, 40%, 0.1);
-}
-
-.gradient-cozy {
-  background: linear-gradient(135deg,
-    hsla(35, 50%, 90%, 0.4) 0%,
-    hsla(30, 45%, 88%, 0.3) 50%,
-    hsla(25, 40%, 85%, 0.4) 100%);
-}
-
-/* Product Card Button */
-.kumo-add-to-cart-btn {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background-color: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
-  font-weight: 500;
-  border-radius: 9999px;
-  transition: background-color 0.15s, transform 0.15s;
-  border: none;
-  cursor: pointer;
-}
-
-.kumo-add-to-cart-btn:hover {
-  background-color: hsl(var(--accent));
-  transform: translateY(-1px);
-}
-
-.kumo-add-to-cart-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.kumo-compare-price {
-  text-decoration: line-through;
-  opacity: 0.6;
-  font-size: 0.875rem;
-  margin-left: 0.5rem;
-}
-
-.kumo-sale-badge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.kumo-soldout-badge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background-color: hsl(var(--muted-foreground));
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* Utility Classes */
-.kumo-min-h-screen { min-height: 100vh; }
-.kumo-fixed { position: fixed; }
-.kumo-absolute { position: absolute; }
-.kumo-relative { position: relative; }
-.kumo-inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-.kumo-top-0 { top: 0; }
-.kumo-left-0 { left: 0; }
-.kumo-right-0 { right: 0; }
-.kumo-bottom-20 { bottom: 5rem; }
-.kumo-right-10 { right: 2.5rem; }
-.kumo-top-40 { top: 10rem; }
-.kumo-right-1\/4 { right: 25%; }
-.kumo--top-0\.5 { top: -0.125rem; }
-.kumo--right-0\.5 { right: -0.125rem; }
-.kumo-z-50 { z-index: 50; }
-
-.kumo-mx-auto { margin-left: auto; margin-right: auto; }
-.kumo-mb-1 { margin-bottom: 0.25rem; }
-.kumo-mb-3 { margin-bottom: 0.75rem; }
-.kumo-mb-4 { margin-bottom: 1rem; }
-.kumo-mb-6 { margin-bottom: 1.5rem; }
-.kumo-mb-10 { margin-bottom: 2.5rem; }
-.kumo-mb-12 { margin-bottom: 3rem; }
-.kumo-mb-14 { margin-bottom: 3.5rem; }
-.kumo-mb-16 { margin-bottom: 4rem; }
-.kumo-mt-4 { margin-top: 1rem; }
-.kumo-mt-8 { margin-top: 2rem; }
-.kumo-mt-12 { margin-top: 3rem; }
-
-.kumo-flex { display: flex; }
-.kumo-inline-flex { display: inline-flex; }
-.kumo-grid { display: grid; }
-.kumo-hidden { display: none; }
-.kumo-inline-block { display: inline-block; }
-.kumo-block { display: block; }
-
-.kumo-h-4 { height: 1rem; }
-.kumo-h-5 { height: 1.25rem; }
-.kumo-h-6 { height: 1.5rem; }
-.kumo-h-9 { height: 2.25rem; }
-.kumo-h-12 { height: 3rem; }
-.kumo-h-16 { height: 4rem; }
-.kumo-h-20 { height: 5rem; }
-.kumo-h-full { height: 100%; }
-
-.kumo-w-4 { width: 1rem; }
-.kumo-w-5 { width: 1.25rem; }
-.kumo-w-9 { width: 2.25rem; }
-.kumo-w-10 { width: 2.5rem; }
-.kumo-w-20 { width: 5rem; }
-.kumo-w-24 { width: 6rem; }
-.kumo-w-32 { width: 8rem; }
-.kumo-w-full { width: 100%; }
-.kumo-w-auto { width: auto; }
-
-.kumo-max-w-md { max-width: 28rem; }
-.kumo-max-w-2xl { max-width: 42rem; }
-.kumo-max-w-4xl { max-width: 56rem; }
-.kumo-max-w-5xl { max-width: 64rem; }
-
-.kumo-items-center { align-items: center; }
-.kumo-justify-between { justify-content: space-between; }
-.kumo-justify-center { justify-content: center; }
-.kumo-flex-col { flex-direction: column; }
-.kumo-flex-wrap { flex-wrap: wrap; }
-.kumo-flex-1 { flex: 1 1 0%; }
-
-.kumo-gap-2 { gap: 0.5rem; }
-.kumo-gap-3 { gap: 0.75rem; }
-.kumo-gap-4 { gap: 1rem; }
-.kumo-gap-6 { gap: 1.5rem; }
-.kumo-gap-8 { gap: 2rem; }
-.kumo-gap-12 { gap: 3rem; }
-
-.kumo-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-
-.kumo-overflow-hidden { overflow: hidden; }
-
-.kumo-rounded-full { border-radius: 9999px; }
-.kumo-rounded { border-radius: 0.25rem; }
-.kumo-rounded-2xl { border-radius: 1.5rem; }
-.kumo-rounded-3xl { border-radius: 2rem; }
-
-.kumo-border-t { border-top-width: 1px; }
-.kumo-border-border { border-color: hsl(var(--border)); }
-
-.kumo-bg-card\/80 { background-color: hsl(var(--card) / 0.8); }
-.kumo-bg-card\/40 { background-color: hsl(var(--card) / 0.4); }
-.kumo-bg-card\/30 { background-color: hsl(var(--card) / 0.3); }
-.kumo-bg-secondary { background-color: hsl(var(--secondary)); }
-.kumo-bg-accent { background-color: hsl(var(--accent)); }
-.kumo-bg-primary { background-color: hsl(var(--primary)); }
-
-.kumo-bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
-.kumo-bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
-.kumo-from-cream-100 { --tw-gradient-from: hsl(38, 55%, 96%); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
-.kumo-to-cream-200 { --tw-gradient-to: hsl(35, 50%, 93%); }
-.kumo-from-background\/60 { --tw-gradient-from: hsl(var(--background) / 0.6); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
-.kumo-via-transparent { --tw-gradient-stops: var(--tw-gradient-from), transparent, var(--tw-gradient-to); }
-.kumo-to-background\/40 { --tw-gradient-to: hsl(var(--background) / 0.4); }
-
-.kumo-object-cover { object-fit: cover; }
-.kumo-object-contain { object-fit: contain; }
-
-.kumo-p-2 { padding: 0.5rem; }
-.kumo-p-6 { padding: 1.5rem; }
-.kumo-px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
-.kumo-px-4 { padding-left: 1rem; padding-right: 1rem; }
-.kumo-px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-.kumo-px-8 { padding-left: 2rem; padding-right: 2rem; }
-.kumo-py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-.kumo-py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
-.kumo-py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-.kumo-py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-.kumo-py-5 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
-.kumo-py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-.kumo-py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-.kumo-py-16 { padding-top: 4rem; padding-bottom: 4rem; }
-.kumo-py-20 { padding-top: 5rem; padding-bottom: 5rem; }
-.kumo-pt-8 { padding-top: 2rem; }
-.kumo-pt-24 { padding-top: 6rem; }
-.kumo-pb-4 { padding-bottom: 1rem; }
-
-.kumo-text-center { text-align: center; }
-.kumo-text-left { text-align: left; }
-
-.kumo-text-10px { font-size: 10px; }
-.kumo-text-xs { font-size: 0.75rem; line-height: 1rem; }
-.kumo-text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-.kumo-text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-.kumo-text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-.kumo-text-2xl { font-size: 1.5rem; line-height: 2rem; }
-.kumo-text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
-.kumo-text-6xl { font-size: 3.75rem; line-height: 1; }
-
-.kumo-font-medium { font-weight: 500; }
-.kumo-font-semibold { font-weight: 600; }
-.kumo-font-bold { font-weight: 700; }
-
-.kumo-leading-tight { line-height: 1.25; }
-.kumo-leading-relaxed { line-height: 1.625; }
-
-.kumo-text-foreground { color: hsl(var(--foreground)); }
-.kumo-text-muted-foreground { color: hsl(var(--muted-foreground)); }
-.kumo-text-primary { color: hsl(var(--primary)); }
-.kumo-text-primary-foreground { color: hsl(var(--primary-foreground)); }
-.kumo-text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
-
-.kumo-shadow-soft { box-shadow: var(--shadow-soft); }
-.kumo-backdrop-blur-md { backdrop-filter: blur(12px); }
-
-.kumo-transition-colors { transition: color 0.15s, background-color 0.15s; }
-.kumo-transition-all { transition: all 0.15s; }
-.kumo-transition-transform { transition: transform 0.5s; }
-
-.kumo-opacity-80 { opacity: 0.8; }
-
-.kumo-blur-xl { filter: blur(24px); }
-.kumo-blur-2xl { filter: blur(40px); }
-
-.kumo-aspect-square { aspect-ratio: 1 / 1; }
-.kumo-space-y-2 > * + * { margin-top: 0.5rem; }
-
-/* Hover States */
-.kumo-hover\:bg-accent:hover { background-color: hsl(var(--accent)); }
-.kumo-hover\:text-foreground:hover { color: hsl(var(--foreground)); }
-.kumo-hover\:gap-3:hover { gap: 0.75rem; }
-
-/* Group Hover */
-.kumo-group:hover .kumo-group-hover\:translate-x-1 { transform: translateX(0.25rem); }
-.kumo-group:hover .kumo-group-hover\:scale-105 { transform: scale(1.05); }
-
-/* Focus States */
-.kumo-focus\:outline-none:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.kumo-focus\:ring-2:focus {
-  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.3);
-}
-
-.kumo-placeholder\:text-muted-foreground::placeholder {
-  color: hsl(var(--muted-foreground));
-}
-
-/* Responsive - SM (640px) */
-@media (min-width: 640px) {
-  .kumo-sm\:flex-row { flex-direction: row; }
-  .kumo-sm\:gap-3 { gap: 0.75rem; }
-}
-
-/* Responsive - MD (768px) */
-@media (min-width: 768px) {
-  .kumo-md\:flex { display: flex; }
-  .kumo-md\:hidden { display: none; }
-  .kumo-md\:flex-row { flex-direction: row; }
-  .kumo-md\:text-left { text-align: left; }
-  .kumo-md\:mx-0 { margin-left: 0; margin-right: 0; }
-  .kumo-md\:py-24 { padding-top: 6rem; padding-bottom: 6rem; }
-  .kumo-md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-  .kumo-md\:text-6xl { font-size: 3.75rem; line-height: 1; }
-  .kumo-md\:gap-12 { gap: 3rem; }
-  .kumo-md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-/* Responsive - LG (1024px) */
-@media (min-width: 1024px) {
-  .kumo-lg\:gap-8 { gap: 2rem; }
-  .kumo-lg\:text-7xl { font-size: 4.5rem; line-height: 1; }
-}
+{% endschema %}

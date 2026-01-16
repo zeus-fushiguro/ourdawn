@@ -1,210 +1,177 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "header": {
+      "type": "kumo-header",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "nav_1": {
+          "type": "nav_link",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "label": "Collection",
+            "link": "#collection"
           }
         },
-        "text": {
-          "type": "text",
+        "nav_2": {
+          "type": "nav_link",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "label": "Notre Histoire",
+            "link": "#story"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
+      "block_order": ["nav_1", "nav_2"],
+      "settings": {}
+    },
+    "hero": {
+      "type": "kumo-hero",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "hero_title_line1": "Cocooning",
+        "hero_title_line2": "à chaque pas.",
+        "hero_description": "Transformez votre intérieur en un refuge. Découvrez le confort ultime de la collection KUMO.",
+        "hero_cta_text": "Explorer le Nuage",
+        "hero_cta_link": "#collection"
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "trust-bar": {
+      "type": "kumo-trust-bar",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "trust_1": {
+          "type": "trust_item",
           "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
+            "icon": "tiktok",
+            "text": "Vu sur TikTok"
           }
         },
-        "text": {
-          "type": "text",
+        "trust_2": {
+          "type": "trust_item",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "icon": "truck",
+            "text": "Livraison Offerte dès 50€"
+          }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "return",
+            "text": "Retours Simplifiés 30 Jours"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "text"
-      ],
+      "block_order": ["trust_1", "trust_2", "trust_3"],
+      "settings": {}
+    },
+    "product-grid": {
+      "type": "kumo-product-grid",
       "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
+        "subtitle": "Les Favoris de l'Hiver",
+        "title": "Nos Best-sellers Nuage",
+        "products_count": 3,
+        "add_to_cart_text": "Ajouter au panier",
+        "sold_out_text": "Épuisé",
+        "show_view_all": true,
+        "view_all_text": "Voir toute la collection"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
+    "benefits": {
+      "type": "kumo-benefits",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
+        "benefit_1": {
+          "type": "benefit",
           "settings": {
-            "collection": ""
+            "icon": "cloud",
+            "title": "Semelle Cloud-Foam™",
+            "subtitle": "3cm d'épaisseur",
+            "description": "Comme marcher sur un nuage, littéralement."
           }
         },
-        "product": {
-          "type": "product",
+        "benefit_2": {
+          "type": "benefit",
           "settings": {
-            "product": "",
-            "second_image": false
+            "icon": "heart",
+            "title": "Sherpa Ultra-Doux",
+            "subtitle": "100% Vegan",
+            "description": "Une caresse à chaque instant sur votre peau."
           }
         },
-        "collection-1": {
-          "type": "collection",
+        "benefit_3": {
+          "type": "benefit",
           "settings": {
-            "collection": ""
+            "icon": "flame",
+            "title": "Chaleur Instantanée",
+            "subtitle": "Isolation thermique",
+            "description": "Dites adieu aux pieds froids pour toujours."
           }
         }
       },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
+      "block_order": ["benefit_1", "benefit_2", "benefit_3"],
       "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "title": "Pourquoi KUMO ?",
+        "description": "Chaque détail est pensé pour votre confort absolu."
       }
     },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
+    "newsletter": {
+      "type": "kumo-newsletter",
       "blocks": {
-        "column1": {
-          "type": "column",
+        "link_1": {
+          "type": "footer_link",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "label": "Collection",
+            "link": "#collection"
           }
         },
-        "column2": {
-          "type": "column",
+        "link_2": {
+          "type": "footer_link",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "label": "Notre Histoire",
+            "link": "#story"
           }
         },
-        "column3": {
-          "type": "column",
+        "link_3": {
+          "type": "footer_link",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "label": "FAQ",
+            "link": "/pages/faq"
+          }
+        },
+        "link_4": {
+          "type": "footer_link",
+          "settings": {
+            "label": "Contact",
+            "link": "/pages/contact"
           }
         }
       },
-      "block_order": [
-        "column1",
-        "column2",
-        "column3"
-      ],
+      "block_order": ["link_1", "link_2", "link_3", "link_4"],
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "newsletter_title": "Rejoignez le Cocon",
+        "newsletter_description": "Recevez nos offres exclusives et les nouveautés en avant-première.",
+        "placeholder_text": "votre@email.com",
+        "button_text": "S'inscrire",
+        "success_message": "Merci ! Vous êtes inscrit(e) à notre newsletter.",
+        "show_payment_icons": true,
+        "payment_text": "Paiement sécurisé",
+        "show_visa": true,
+        "show_mastercard": true,
+        "show_paypal": true,
+        "show_apple_pay": false,
+        "copyright_text": "Tous droits réservés. Fait avec ♥ en France."
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "header",
+    "hero",
+    "trust-bar",
+    "product-grid",
+    "benefits",
+    "newsletter"
   ]
 }
