@@ -1,0 +1,102 @@
+{{ 'kumo-styles.css' | asset_url | stylesheet_tag }}
+
+<section class="kumo-hero kumo-relative kumo-min-h-screen kumo-flex kumo-items-center kumo-justify-center kumo-overflow-hidden kumo-pt-24">
+  <!-- Background Image with Overlay -->
+  <div class="kumo-absolute kumo-inset-0">
+    {% if section.settings.hero_image != blank %}
+      {{
+        section.settings.hero_image
+        | image_url: width: 1920
+        | image_tag:
+          loading: 'eager',
+          class: 'kumo-w-full kumo-h-full kumo-object-cover',
+          alt: section.settings.hero_image_alt
+      }}
+    {% else %}
+      <div class="kumo-w-full kumo-h-full kumo-bg-gradient-to-b kumo-from-cream-100 kumo-to-cream-200"></div>
+    {% endif %}
+    <div class="kumo-absolute kumo-inset-0 gradient-cozy"></div>
+    <div class="kumo-absolute kumo-inset-0 kumo-bg-gradient-to-r kumo-from-background/60 kumo-via-transparent kumo-to-background/40"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="kumo-relative kumo-container kumo-mx-auto kumo-px-4 kumo-py-12 kumo-md:py-24">
+    <div class="kumo-max-w-2xl kumo-mx-auto kumo-text-center kumo-md:text-left kumo-md:mx-0">
+      <h1 class="kumo-text-4xl kumo-md:text-6xl kumo-lg:text-7xl kumo-font-bold kumo-text-foreground text-fluffy kumo-leading-tight kumo-mb-6">
+        {{ section.settings.hero_title_line1 }}
+        <br />
+        <span class="kumo-text-primary">{{ section.settings.hero_title_line2 }}</span>
+      </h1>
+
+      <p class="kumo-text-lg kumo-md:text-xl kumo-text-muted-foreground kumo-mb-10 kumo-max-w-md kumo-mx-auto kumo-md:mx-0">
+        {{ section.settings.hero_description }}
+      </p>
+
+      <a href="{{ section.settings.hero_cta_link }}" class="btn-cozy kumo-inline-flex kumo-items-center kumo-gap-3 kumo-group">
+        <span>{{ section.settings.hero_cta_text }}</span>
+        <svg class="kumo-w-5 kumo-h-5 kumo-transition-transform kumo-group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating Cloud Decorations -->
+  <div class="kumo-absolute kumo-bottom-20 kumo-right-10 kumo-w-32 kumo-h-20 kumo-bg-card/40 kumo-rounded-full kumo-blur-2xl"></div>
+  <div class="kumo-absolute kumo-top-40 kumo-right-1/4 kumo-w-24 kumo-h-16 kumo-bg-card/30 kumo-rounded-full kumo-blur-xl"></div>
+</section>
+
+{% schema %}
+{
+  "name": "KUMO - Hero",
+  "tag": "section",
+  "class": "kumo-section-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Image de fond"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Alt text de l'image",
+      "default": "Pantoufles KUMO"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_line1",
+      "label": "Titre ligne 1",
+      "default": "Cocooning"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_line2",
+      "label": "Titre ligne 2 (colorée)",
+      "default": "à chaque pas."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_description",
+      "label": "Description",
+      "default": "Transformez votre intérieur en un refuge. Découvrez le confort ultime de la collection KUMO."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_text",
+      "label": "Texte du bouton",
+      "default": "Explorer le Nuage"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_link",
+      "label": "Lien du bouton"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KUMO - Hero"
+    }
+  ]
+}
+{% endschema %}

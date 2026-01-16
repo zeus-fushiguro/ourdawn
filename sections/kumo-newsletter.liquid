@@ -1,0 +1,245 @@
+{{ 'kumo-styles.css' | asset_url | stylesheet_tag }}
+
+<footer class="kumo-py-16 kumo-px-4 kumo-border-t kumo-border-border">
+  <div class="kumo-container kumo-mx-auto">
+    <!-- Newsletter Section -->
+    <div class="kumo-text-center kumo-mb-12">
+      <h3 class="kumo-text-2xl kumo-font-bold kumo-text-foreground kumo-mb-3 text-fluffy">
+        {{ section.settings.newsletter_title }}
+      </h3>
+      <p class="kumo-text-muted-foreground kumo-mb-6 kumo-max-w-md kumo-mx-auto">
+        {{ section.settings.newsletter_description }}
+      </p>
+
+      {% form 'customer', id: 'kumo-newsletter-form' %}
+        <div class="kumo-flex kumo-flex-col kumo-sm:flex-row kumo-gap-3 kumo-max-w-md kumo-mx-auto">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.placeholder_text }}"
+            required
+            class="kumo-flex-1 kumo-px-6 kumo-py-4 kumo-rounded-full kumo-bg-secondary kumo-text-foreground kumo-placeholder:text-muted-foreground kumo-focus:outline-none kumo-focus:ring-2"
+          >
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <button type="submit" class="btn-cozy kumo-px-8 kumo-py-4">
+            {{ section.settings.button_text }}
+          </button>
+        </div>
+        {% if form.posted_successfully? %}
+          <p class="kumo-text-primary kumo-mt-4 kumo-font-medium">{{ section.settings.success_message }}</p>
+        {% endif %}
+        {% if form.errors %}
+          <p class="kumo-text-red-500 kumo-mt-4">{{ form.errors | default_errors }}</p>
+        {% endif %}
+      {% endform %}
+    </div>
+
+    <!-- Footer Links -->
+    <div class="kumo-flex kumo-flex-col kumo-md:flex-row kumo-items-center kumo-justify-between kumo-gap-8 kumo-pt-8 kumo-border-t kumo-border-border">
+      <!-- Logo -->
+      {% if section.settings.footer_logo != blank %}
+        {{ section.settings.footer_logo | image_url: width: 150 | image_tag:
+          loading: 'lazy',
+          class: 'kumo-h-10 kumo-w-auto kumo-object-contain kumo-opacity-80',
+          alt: shop.name
+        }}
+      {% else %}
+        <span class="kumo-text-xl kumo-font-bold kumo-text-foreground kumo-opacity-80">{{ shop.name }}</span>
+      {% endif %}
+
+      <!-- Links -->
+      <nav class="kumo-flex kumo-flex-wrap kumo-items-center kumo-justify-center kumo-gap-6 kumo-text-sm kumo-text-muted-foreground">
+        {% for block in section.blocks %}
+          {% if block.type == 'footer_link' %}
+            <a href="{{ block.settings.link }}" class="kumo-hover:text-foreground kumo-transition-colors" {{ block.shopify_attributes }}>
+              {{ block.settings.label }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+
+      <!-- Payment Icons -->
+      {% if section.settings.show_payment_icons %}
+        <div class="kumo-flex kumo-items-center kumo-gap-3 kumo-text-muted-foreground">
+          <span class="kumo-text-xs kumo-font-medium">{{ section.settings.payment_text }}</span>
+          <div class="kumo-flex kumo-gap-2">
+            {% if section.settings.show_visa %}
+              <div class="kumo-w-10 kumo-h-6 kumo-bg-secondary kumo-rounded kumo-flex kumo-items-center kumo-justify-center kumo-text-10px kumo-font-bold">
+                VISA
+              </div>
+            {% endif %}
+            {% if section.settings.show_mastercard %}
+              <div class="kumo-w-10 kumo-h-6 kumo-bg-secondary kumo-rounded kumo-flex kumo-items-center kumo-justify-center kumo-text-10px kumo-font-bold">
+                MC
+              </div>
+            {% endif %}
+            {% if section.settings.show_paypal %}
+              <div class="kumo-w-10 kumo-h-6 kumo-bg-secondary kumo-rounded kumo-flex kumo-items-center kumo-justify-center kumo-text-10px kumo-font-bold">
+                PP
+              </div>
+            {% endif %}
+            {% if section.settings.show_apple_pay %}
+              <div class="kumo-w-10 kumo-h-6 kumo-bg-secondary kumo-rounded kumo-flex kumo-items-center kumo-justify-center kumo-text-10px kumo-font-bold">
+                AP
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Copyright -->
+    <div class="kumo-text-center kumo-mt-8 kumo-text-xs kumo-text-muted-foreground">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text }}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "KUMO - Footer",
+  "tag": "section",
+  "class": "kumo-section-footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Titre newsletter",
+      "default": "Rejoignez le Cocon"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_description",
+      "label": "Description newsletter",
+      "default": "Recevez nos offres exclusives et les nouveautés en avant-première."
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Placeholder email",
+      "default": "votre@email.com"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texte bouton",
+      "default": "S'inscrire"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Message de succès",
+      "default": "Merci pour votre inscription !"
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Logo footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Afficher icônes de paiement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "payment_text",
+      "label": "Texte paiement",
+      "default": "Paiement sécurisé"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_visa",
+      "label": "Visa",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mastercard",
+      "label": "Mastercard",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_paypal",
+      "label": "PayPal",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_apple_pay",
+      "label": "Apple Pay",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Texte copyright",
+      "default": "Tous droits réservés."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "footer_link",
+      "name": "Lien footer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texte",
+          "default": "Lien"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "KUMO - Newsletter & Footer",
+      "blocks": [
+        {
+          "type": "footer_link",
+          "settings": {
+            "label": "Collection",
+            "link": "#collection"
+          }
+        },
+        {
+          "type": "footer_link",
+          "settings": {
+            "label": "Notre Histoire",
+            "link": "#story"
+          }
+        },
+        {
+          "type": "footer_link",
+          "settings": {
+            "label": "FAQ",
+            "link": "/pages/faq"
+          }
+        },
+        {
+          "type": "footer_link",
+          "settings": {
+            "label": "Contact",
+            "link": "/pages/contact"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

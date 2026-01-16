@@ -1,0 +1,184 @@
+{{ 'kumo-styles.css' | asset_url | stylesheet_tag }}
+
+<section id="collection" class="kumo-py-20 kumo-px-4">
+  <div class="kumo-container kumo-mx-auto">
+    <!-- Section Header -->
+    <div class="kumo-text-center kumo-mb-14">
+      {% if section.settings.subtitle != blank %}
+        <span class="kumo-inline-block kumo-px-4 kumo-py-1.5 kumo-bg-secondary kumo-rounded-full kumo-text-sm kumo-font-medium kumo-text-muted-foreground kumo-mb-4">
+          {{ section.settings.subtitle }}
+        </span>
+      {% endif %}
+      <h2 class="section-title text-fluffy">{{ section.settings.title }}</h2>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="kumo-grid kumo-grid-cols-1 kumo-md:grid-cols-3 kumo-gap-6 kumo-lg:gap-8 kumo-max-w-5xl kumo-mx-auto">
+      {% if section.settings.collection != blank %}
+        {% assign products = section.settings.collection.products %}
+      {% else %}
+        {% assign products = collections.all.products %}
+      {% endif %}
+
+      {% for product in products limit: section.settings.products_count %}
+        <article class="kumo-group">
+          <div class="card-float kumo-p-6">
+            <!-- Product Image -->
+            <a href="{{ product.url }}" class="kumo-block kumo-relative kumo-aspect-square kumo-mb-4 kumo-overflow-hidden kumo-rounded-2xl kumo-bg-gradient-to-b kumo-from-cream-100 kumo-to-cream-200">
+              {% if product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 600 | image_tag:
+                  loading: 'lazy',
+                  class: 'kumo-w-full kumo-h-full kumo-object-cover kumo-transition-transform kumo-group-hover:scale-105',
+                  alt: product.title
+                }}
+              {% else %}
+                <div class="kumo-w-full kumo-h-full kumo-flex kumo-items-center kumo-justify-center kumo-text-muted-foreground">
+                  <svg class="kumo-w-20 kumo-h-20" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                  </svg>
+                </div>
+              {% endif %}
+
+              <!-- Sale Badge -->
+              {% if product.compare_at_price > product.price %}
+                <span class="kumo-sale-badge">
+                  -{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+                </span>
+              {% endif %}
+
+              <!-- Sold Out Badge -->
+              {% unless product.available %}
+                <span class="kumo-soldout-badge">Épuisé</span>
+              {% endunless %}
+            </a>
+
+            <!-- Product Info -->
+            <div class="kumo-text-center kumo-space-y-2">
+              <a href="{{ product.url }}">
+                <h3 class="kumo-font-semibold kumo-text-foreground kumo-text-lg">{{ product.title }}</h3>
+              </a>
+              <p class="kumo-text-primary kumo-font-bold kumo-text-xl">
+                {{ product.price | money }}
+                {% if product.compare_at_price > product.price %}
+                  <span class="kumo-compare-price">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </p>
+            </div>
+
+            <!-- Add to Cart Button -->
+            {% if product.available %}
+              <form action="/cart/add" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="kumo-add-to-cart-btn">
+                  {{ section.settings.add_to_cart_text }}
+                </button>
+              </form>
+            {% else %}
+              <button type="button" class="kumo-add-to-cart-btn" disabled>
+                {{ section.settings.sold_out_text }}
+              </button>
+            {% endif %}
+          </div>
+        </article>
+      {% else %}
+        <!-- Placeholder products when no collection is selected -->
+        {% for i in (1..3) %}
+          <article class="kumo-group">
+            <div class="card-float kumo-p-6">
+              <div class="kumo-relative kumo-aspect-square kumo-mb-4 kumo-overflow-hidden kumo-rounded-2xl kumo-bg-gradient-to-b kumo-from-cream-100 kumo-to-cream-200">
+                <div class="kumo-w-full kumo-h-full kumo-flex kumo-items-center kumo-justify-center kumo-text-muted-foreground">
+                  {{ 'product-' | append: i | placeholder_svg_tag: 'kumo-w-full kumo-h-full kumo-object-cover' }}
+                </div>
+              </div>
+              <div class="kumo-text-center kumo-space-y-2">
+                <h3 class="kumo-font-semibold kumo-text-foreground kumo-text-lg">Produit exemple {{ i }}</h3>
+                <p class="kumo-text-primary kumo-font-bold kumo-text-xl">34,99€</p>
+              </div>
+              <button type="button" class="kumo-add-to-cart-btn">
+                {{ section.settings.add_to_cart_text }}
+              </button>
+            </div>
+          </article>
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+    <!-- View All Link -->
+    {% if section.settings.show_view_all and section.settings.collection != blank %}
+      <div class="kumo-text-center kumo-mt-12">
+        <a href="{{ section.settings.collection.url }}" class="kumo-inline-flex kumo-items-center kumo-gap-2 kumo-text-primary kumo-font-medium kumo-hover:gap-3 kumo-transition-all">
+          {{ section.settings.view_all_text }}
+          <svg class="kumo-w-4 kumo-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "KUMO - Grille Produits",
+  "tag": "section",
+  "class": "kumo-section-product-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Les Favoris de l'Hiver"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Nos Best-sellers Nuage"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Nombre de produits",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Texte bouton ajouter",
+      "default": "Ajouter au panier"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Texte épuisé",
+      "default": "Épuisé"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Afficher 'Voir tout'",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "Texte voir tout",
+      "default": "Voir toute la collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KUMO - Grille Produits"
+    }
+  ]
+}
+{% endschema %}
